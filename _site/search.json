@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Water Boil Notices in Texas- Maria Probert",
+    "section": "",
+    "text": "This project was made for the UT Media Group Data Fellowship.\nThis project aims to look at what water boil notices look like in Texas. What counties or cities are affected? Why were the water boil notices issues? What caused these water boil notices? Are some of the questions I’m hoping to answer.\nThe angle of this project focuses more on the local level, in an attempt to highlight communities impacted by water boil notices. The data I used for this project is from the Texas COmmission on Environmental Quality or TCEQ, and I obtained it from a public request.\nThis is a Quarto website."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  }
+]
