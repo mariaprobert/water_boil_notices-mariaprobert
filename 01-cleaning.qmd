@@ -22,6 +22,7 @@ Loading up the libraries:
 
 library(tidyverse)
 library(janitor)
+library(readxl)
 ```
 
 
@@ -33,10 +34,13 @@ More information about the data can be found on the index page of this notebook.
 
 ```{r}
 download.file(
-  "https://github.com/utdata/rwd-billboard-data/blob/main/data-out/hot100_assignment.csv?raw=true",
-  "data-raw/hot100_assignment.csv",
+  "https://utexas-my.sharepoint.com/:x:/g/personal/mp48828_my_utexas_edu/EZZunjkd_7dLmH6EduWTVu4BFVPcKRpeGRoLIYyfYyrG7w?e=8pRzRN",
+  "data-raw/old_water_boil.xlsx",
   mode = "wb"
 )
+```
+```{r}
+read_excel("data-raw/old_water_boil.xlsx")
 ```
 
 

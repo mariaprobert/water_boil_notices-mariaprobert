@@ -33,5 +33,12 @@
     "title": "Cleaning",
     "section": "Setup",
     "text": "Setup\nLoading up the libraries:\n\nlibrary(tidyverse)\nlibrary(janitor)"
+  },
+  {
+    "objectID": "01-cleaning.html#downloading-data",
+    "href": "01-cleaning.html#downloading-data",
+    "title": "Cleaning",
+    "section": "Downloading Data",
+    "text": "Downloading Data\nHere I will download the TCEQ data that I obtained from a public records request. The data goes over the counties or jurisdictions affected by water boil notices, start and end date of a water boil notice and the nature of the water boil notice.\nMore information about the data can be found on the index page of this notebook.\n\ndownload.file(\n  \"https://github.com/utdata/rwd-billboard-data/blob/main/data-out/hot100_assignment.csv?raw=true\",\n  \"data-raw/hot100_assignment.csv\",\n  mode = \"wb\"\n)"
   }
 ]
