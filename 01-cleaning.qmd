@@ -60,15 +60,15 @@ Notes for water boil notice cleaning:
 
 We want to make sure that our dates are in month, date, year format for consistency in our analysis. We also want to make sure that our notebook recognizes that information as dates. 
 
-** dates is not working 
+Our end date was having issues parsing, so we made sure that the date did not exist or was "NA," after we filtered it out we can see that maybe these dates are on going and thats why they were formatted differently from "start_date."
 
 ```{r}
 water_boil_dates <- water_boil |>
   mutate(
-    end_date_notice = mdy(end_date)
+    end_date_notice = excel_numeric_to_date(end_date |> parse_number()), .after = end_date
   )
 
-water_boil_dates
+water_boil_dates |> filter(is.na(end_date_notice))
 ```
 
 
