@@ -32,13 +32,13 @@
     "href": "01-cleaning.html#setup",
     "title": "Cleaning",
     "section": "Setup",
-    "text": "Setup\nLoading up the libraries:\n\nlibrary(tidyverse)\nlibrary(janitor)"
+    "text": "Setup\nLoading up the libraries:\n\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(readxl)"
   },
   {
     "objectID": "01-cleaning.html#downloading-data",
     "href": "01-cleaning.html#downloading-data",
     "title": "Cleaning",
     "section": "Downloading Data",
-    "text": "Downloading Data\nHere I will download the TCEQ data that I obtained from a public records request. The data goes over the counties or jurisdictions affected by water boil notices, start and end date of a water boil notice and the nature of the water boil notice.\nMore information about the data can be found on the index page of this notebook.\n\ndownload.file(\n  \"https://github.com/utdata/rwd-billboard-data/blob/main/data-out/hot100_assignment.csv?raw=true\",\n  \"data-raw/hot100_assignment.csv\",\n  mode = \"wb\"\n)"
+    "text": "Downloading Data\nHere I will download the TCEQ data that I obtained from a public records request. The data goes over the counties or jurisdictions affected by water boil notices, start and end date of a water boil notice and the nature of the water boil notice.\nMore information about the data can be found on the index page of this notebook.\nDownloaded the file…\n\nread_excel(\"data-raw/water_boil_2018_2022.xlsx\")\n\n# A tibble: 12,867 × 8\n   `RN#`     `RN Name` `Start Date`        `End Date` Status County Jurisdiction\n   &lt;chr&gt;     &lt;chr&gt;     &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;       \n 1 RN100209… ORANGE C… 2021-06-08 00:00:00 44368      CLOSED ORANGE REGION 10 -…\n 2 RN100209… ORANGE C… 2021-02-17 00:00:00 44253      CLOSED ORANGE REGION 10 -…\n 3 RN100209… ORANGE C… 2020-09-02 00:00:00 44085      CLOSED ORANGE REGION 10 -…\n 4 RN100210… INEOS GR… 2021-02-15 00:00:00 44256      CLOSED CALHO… REGION 14 -…\n 5 RN100210… EQUISTAR… 2022-12-22 00:00:00 44932      CLOSED HARRIS REGION 12 -…\n 6 RN100210… EQUISTAR… 2022-08-06 00:00:00 44788      CLOSED HARRIS &lt;NA&gt;        \n 7 RN100210… EQUISTAR… 2022-07-12 00:00:00 44761      CLOSED HARRIS &lt;NA&gt;        \n 8 RN100210… EQUISTAR… 2021-08-12 00:00:00 44427      CLOSED HARRIS &lt;NA&gt;        \n 9 RN100210… EQUISTAR… 2021-02-17 00:00:00 44253      CLOSED HARRIS REGION 12 -…\n10 RN100210… EQUISTAR… 2019-11-21 00:00:00 43794      CLOSED HARRIS &lt;NA&gt;        \n# ℹ 12,857 more rows\n# ℹ 1 more variable: Nature &lt;chr&gt;"
   }
 ]

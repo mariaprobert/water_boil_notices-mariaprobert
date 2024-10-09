@@ -32,12 +32,27 @@ Here I will download the TCEQ data that I obtained from a public records request
 
 More information about the data can be found on the index page of this notebook. 
 
-Downloaded the file... 
+Downloaded the file straight into my computer rather than downloading it into this notebook because its in Excel formatting. I dowloaded the data into my data-raw folder. 
 
+## Importing the Data 
+
+Here I am reading the data into my notebook that I already have downloaded to my "data-raw" folder. Then, we're adding our data to a code chunk. For simplicity it will be called "water_boil" which we will then peak at in order to look at what our data looks like in order to clean. 
 
 ```{r}
-read_excel("data-raw/water_boil_2018_2022.xlsx")
+water_boil <- read_excel("data-raw/water_boil_2018_2022.xlsx")
+
+water_boil
 ```
+
+Now we will glimpse the data: 
+
+```{r}
+water_boil |> glimpse()
+```
+
+Notes for water boil notice cleaning: 
+- RN Name means
+
 
 
 

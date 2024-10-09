@@ -190,19 +190,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Loading up the libraries:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="downloading-data" class="level2">
 <h2 class="anchored" data-anchor-id="downloading-data">Downloading Data</h2>
 <p>Here I will download the TCEQ data that I obtained from a public records request. The data goes over the counties or jurisdictions affected by water boil notices, start and end date of a water boil notice and the nature of the water boil notice.</p>
 <p>More information about the data can be found on the index page of this notebook.</p>
+<p>Downloaded the file…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://github.com/utdata/rwd-billboard-data/blob/main/data-out/hot100_assignment.csv?raw=true"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data-raw/hot100_assignment.csv"</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"wb"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"data-raw/water_boil_2018_2022.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12,867 × 8
+   `RN#`     `RN Name` `Start Date`        `End Date` Status County Jurisdiction
+   &lt;chr&gt;     &lt;chr&gt;     &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;       
+ 1 RN100209… ORANGE C… 2021-06-08 00:00:00 44368      CLOSED ORANGE REGION 10 -…
+ 2 RN100209… ORANGE C… 2021-02-17 00:00:00 44253      CLOSED ORANGE REGION 10 -…
+ 3 RN100209… ORANGE C… 2020-09-02 00:00:00 44085      CLOSED ORANGE REGION 10 -…
+ 4 RN100210… INEOS GR… 2021-02-15 00:00:00 44256      CLOSED CALHO… REGION 14 -…
+ 5 RN100210… EQUISTAR… 2022-12-22 00:00:00 44932      CLOSED HARRIS REGION 12 -…
+ 6 RN100210… EQUISTAR… 2022-08-06 00:00:00 44788      CLOSED HARRIS &lt;NA&gt;        
+ 7 RN100210… EQUISTAR… 2022-07-12 00:00:00 44761      CLOSED HARRIS &lt;NA&gt;        
+ 8 RN100210… EQUISTAR… 2021-08-12 00:00:00 44427      CLOSED HARRIS &lt;NA&gt;        
+ 9 RN100210… EQUISTAR… 2021-02-17 00:00:00 44253      CLOSED HARRIS REGION 12 -…
+10 RN100210… EQUISTAR… 2019-11-21 00:00:00 43794      CLOSED HARRIS &lt;NA&gt;        
+# ℹ 12,857 more rows
+# ℹ 1 more variable: Nature &lt;chr&gt;</code></pre>
+</div>
 </div>
 
 
