@@ -51,7 +51,7 @@ water_boil |> glimpse()
 ```
 
 Notes for water boil notice cleaning: 
-- According to TCEQ, an RN Name is a, A “Regulated Entity” is a person, organization, place, or thing that is of environmental interest to TCEQ where regulatory activities of interest to the Agency occur or have occurred in the past. Examples are a site, facility or license." Each RN is given an 11 digit, which is recorded in the column "RN#" 
+- According to TCEQ, an RN Name is a, A “Regulated Entity” is a person, organization, place, or thing that is of environmental interest to TCEQ where regulatory activities of interest to the Agency occur or have occurred in the past. Examples are a site, facility or license." Each RN is given an 11 digit, which is recorded in the column "RN#" More information on RNs can be found here: https://www.tceq.texas.gov/downloads/remediation/iop/core-data-form-instructions-10400.pdf 
 - We have to change both end and start data to a date column instead of chr or dttm
 - We have to clean names of columns and data 
 - The formatting of the "Jurisdiction" column is a bit weird, why do some entities include this information and others exclude this information? What constitutes a jurisdiction?  
