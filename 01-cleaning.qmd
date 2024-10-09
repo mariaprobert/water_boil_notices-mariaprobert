@@ -36,10 +36,10 @@ Downloaded the file straight into my computer rather than downloading it into th
 
 ## Importing the Data 
 
-Here I am reading the data into my notebook that I already have downloaded to my "data-raw" folder. Then, we're adding our data to a code chunk. For simplicity it will be called "water_boil" which we will then peak at in order to look at what our data looks like in order to clean. 
+Here I am reading the data into my notebook that I already have downloaded to my "data-raw" folder. Then, we're adding our data to a code chunk. For simplicity it will be called "water_boil" which we will then peak at in order to look at what our data looks like in order to clean. We add the clean_names() function so tht we can see our data columns in a clean way. 
 
 ```{r}
-water_boil <- read_excel("data-raw/water_boil_2018_2022.xlsx")
+water_boil <- read_excel("data-raw/water_boil_2018_2022.xlsx") |> clean_names()
 
 water_boil
 ```
@@ -55,6 +55,21 @@ Notes for water boil notice cleaning:
 - We have to change both end and start data to a date column instead of chr or dttm
 - We have to clean names of columns and data 
 - The formatting of the "Jurisdiction" column is a bit weird, why do some entities include this information and others exclude this information? What constitutes a jurisdiction?  
+
+## Fixing the dates 
+
+We want to make sure that our dates are in month, date, year format for consistency in our analysis. We also want to make sure that our notebook recognizes that information as dates. 
+
+** dates is not working 
+
+```{r}
+water_boil_dates <- water_boil |>
+  mutate(
+    end_date_notice = mdy(end_date)
+  )
+
+water_boil_dates
+```
 
 
 
