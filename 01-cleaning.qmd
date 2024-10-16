@@ -60,16 +60,64 @@ Notes for water boil notice cleaning:
 
 We want to make sure that our dates are in month, date, year format for consistency in our analysis. We also want to make sure that our notebook recognizes that information as dates. 
 
-Our end date was having issues parsing, so we made sure that the date did not exist or was "NA," after we filtered it out we can see that maybe these dates are on going and thats why they were formatted differently from "start_date."
+Our end date was having issues parsing, so we made sure that the date did not exist or was "NA," after we filtered it out we can see that maybe these dates are on going and that's why they were formatted differently from "start_date."
 
 ```{r}
 water_boil_dates <- water_boil |>
   mutate(
     end_date_notice = excel_numeric_to_date(end_date |> parse_number()), .after = end_date
   )
-
-water_boil_dates |> filter(is.na(end_date_notice))
+water_boil_dates
+##water_boil_dates |> filter(is.na(end_date_notice))
 ```
+
+## Importing Updated Data  
+
+I uploaded the new data that encompasses all water boil notices from January 2022 to December of 2023 into my data-raw folder. This data also encompasses a few boil notices from 2024. 
+
+```{r}
+water_boil_new <- read_excel("data-raw/BWN_water_boil_new .xlsx") |> clean_names() 
+
+water_boil_new 
+```
+
+Now we will glimpse the data: 
+
+```{r}
+water_boil_new |> glimpse()
+```
+
+## Cleaning names of new data
+
+The older data and the newer data have different column names. In this new data I want to change "issued" and "rescinded" to "start_date" and "end_date." I will change those last two columns when I change the variable to a date. 
+
+```{r}
+water_boil_new_names <- water_boil_new |>
+  mutate(
+    nature = reason
+  )
+
+water_boil_new_names |> glimpse()
+```
+
+## Clean dates 
+
+It looks like our "start_date" column is facing the same excel date issue. We also have to change the end_date column so that is appears as a date variable. 
+
+```{r}
+water_boil_dates_new <- water_boil_new_names |>
+  mutate(
+       start_date = mdy(issued), 
+       end_date = mdy(rescinded)
+  )
+
+water_boil_dates_new
+
+```
+
+## Remove unnecessary column 
+
+I checked in the original dataset if there was any row of data in the "do_not_consume_use" column and they were all N/A. We will remove this unnecessary column. 
 
 
 

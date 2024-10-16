@@ -248,36 +248,46 @@ $ nature       &lt;chr&gt; "WATER OUTAGE", "LOW DISTRIBUTION PRESSURE", "NATURAL
 <section id="fixing-the-dates" class="level2">
 <h2 class="anchored" data-anchor-id="fixing-the-dates">Fixing the dates</h2>
 <p>We want to make sure that our dates are in month, date, year format for consistency in our analysis. We also want to make sure that our notebook recognizes that information as dates.</p>
-<p>** dates is not working</p>
+<p>Our end date was having issues parsing, so we made sure that the date did not exist or was “NA,” after we filtered it out we can see that maybe these dates are on going and thats why they were formatted differently from “start_date.”</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>water_boil_dates <span class="ot">&lt;-</span> water_boil <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_date_notice =</span> <span class="fu">mdy</span>(end_date)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_date_notice =</span> <span class="fu">excel_numeric_to_date</span>(end_date <span class="sc">|&gt;</span> <span class="fu">parse_number</span>()), <span class="at">.after =</span> end_date</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: There was 1 warning in `mutate()`.
-ℹ In argument: `end_date_notice = mdy(end_date)`.
+ℹ In argument: `end_date_notice =
+  excel_numeric_to_date(parse_number(end_date))`.
 Caused by warning:
-! All formats failed to parse. No formats found.</code></pre>
+! 444 parsing failures.
+row col expected actual
+ 78  -- a number      -
+120  -- a number      -
+252  -- a number      -
+276  -- a number      -
+301  -- a number      -
+... ... ........ ......
+See problems(...) for more details.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>water_boil_dates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12,867 × 9
-   rn_number   rn_name   start_date          end_date status county jurisdiction
-   &lt;chr&gt;       &lt;chr&gt;     &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;       
- 1 RN100209386 ORANGE C… 2021-06-08 00:00:00 44368    CLOSED ORANGE REGION 10 -…
- 2 RN100209386 ORANGE C… 2021-02-17 00:00:00 44253    CLOSED ORANGE REGION 10 -…
- 3 RN100209386 ORANGE C… 2020-09-02 00:00:00 44085    CLOSED ORANGE REGION 10 -…
- 4 RN100210038 INEOS GR… 2021-02-15 00:00:00 44256    CLOSED CALHO… REGION 14 -…
- 5 RN100210319 EQUISTAR… 2022-12-22 00:00:00 44932    CLOSED HARRIS REGION 12 -…
- 6 RN100210319 EQUISTAR… 2022-08-06 00:00:00 44788    CLOSED HARRIS &lt;NA&gt;        
- 7 RN100210319 EQUISTAR… 2022-07-12 00:00:00 44761    CLOSED HARRIS &lt;NA&gt;        
- 8 RN100210319 EQUISTAR… 2021-08-12 00:00:00 44427    CLOSED HARRIS &lt;NA&gt;        
- 9 RN100210319 EQUISTAR… 2021-02-17 00:00:00 44253    CLOSED HARRIS REGION 12 -…
-10 RN100210319 EQUISTAR… 2019-11-21 00:00:00 43794    CLOSED HARRIS &lt;NA&gt;        
+   rn_number  rn_name start_date          end_date end_date_notice status county
+   &lt;chr&gt;      &lt;chr&gt;   &lt;dttm&gt;              &lt;chr&gt;    &lt;date&gt;          &lt;chr&gt;  &lt;chr&gt; 
+ 1 RN1002093… ORANGE… 2021-06-08 00:00:00 44368    2021-06-21      CLOSED ORANGE
+ 2 RN1002093… ORANGE… 2021-02-17 00:00:00 44253    2021-02-26      CLOSED ORANGE
+ 3 RN1002093… ORANGE… 2020-09-02 00:00:00 44085    2020-09-11      CLOSED ORANGE
+ 4 RN1002100… INEOS … 2021-02-15 00:00:00 44256    2021-03-01      CLOSED CALHO…
+ 5 RN1002103… EQUIST… 2022-12-22 00:00:00 44932    2023-01-06      CLOSED HARRIS
+ 6 RN1002103… EQUIST… 2022-08-06 00:00:00 44788    2022-08-15      CLOSED HARRIS
+ 7 RN1002103… EQUIST… 2022-07-12 00:00:00 44761    2022-07-19      CLOSED HARRIS
+ 8 RN1002103… EQUIST… 2021-08-12 00:00:00 44427    2021-08-19      CLOSED HARRIS
+ 9 RN1002103… EQUIST… 2021-02-17 00:00:00 44253    2021-02-26      CLOSED HARRIS
+10 RN1002103… EQUIST… 2019-11-21 00:00:00 43794    2019-11-25      CLOSED HARRIS
 # ℹ 12,857 more rows
-# ℹ 2 more variables: nature &lt;chr&gt;, end_date_notice &lt;date&gt;</code></pre>
+# ℹ 2 more variables: jurisdiction &lt;chr&gt;, nature &lt;chr&gt;</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">##water_boil_dates |&gt; filter(is.na(end_date_notice))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
