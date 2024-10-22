@@ -151,6 +151,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#downloading-data" id="toc-downloading-data" class="nav-link" data-scroll-target="#downloading-data">Downloading Data</a></li>
   <li><a href="#importing-the-data" id="toc-importing-the-data" class="nav-link" data-scroll-target="#importing-the-data">Importing the Data</a></li>
   <li><a href="#fixing-the-dates" id="toc-fixing-the-dates" class="nav-link" data-scroll-target="#fixing-the-dates">Fixing the dates</a></li>
+  <li><a href="#importing-updated-data" id="toc-importing-updated-data" class="nav-link" data-scroll-target="#importing-updated-data">Importing Updated Data</a></li>
+  <li><a href="#cleaning-names-of-new-data" id="toc-cleaning-names-of-new-data" class="nav-link" data-scroll-target="#cleaning-names-of-new-data">Cleaning names of new data</a></li>
+  <li><a href="#clean-dates" id="toc-clean-dates" class="nav-link" data-scroll-target="#clean-dates">Clean dates</a></li>
+  <li><a href="#remove-unnecessary-column" id="toc-remove-unnecessary-column" class="nav-link" data-scroll-target="#remove-unnecessary-column">Remove unnecessary column</a></li>
   </ul>
 </nav>
     </div>
@@ -248,7 +252,7 @@ $ nature       &lt;chr&gt; "WATER OUTAGE", "LOW DISTRIBUTION PRESSURE", "NATURAL
 <section id="fixing-the-dates" class="level2">
 <h2 class="anchored" data-anchor-id="fixing-the-dates">Fixing the dates</h2>
 <p>We want to make sure that our dates are in month, date, year format for consistency in our analysis. We also want to make sure that our notebook recognizes that information as dates.</p>
-<p>Our end date was having issues parsing, so we made sure that the date did not exist or was “NA,” after we filtered it out we can see that maybe these dates are on going and thats why they were formatted differently from “start_date.”</p>
+<p>Our end date was having issues parsing, so we made sure that the date did not exist or was “NA,” after we filtered it out we can see that maybe these dates are on going and that’s why they were formatted differently from “start_date.”</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>water_boil_dates <span class="ot">&lt;-</span> water_boil <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -289,6 +293,136 @@ See problems(...) for more details.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">##water_boil_dates |&gt; filter(is.na(end_date_notice))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="importing-updated-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-updated-data">Importing Updated Data</h2>
+<p>I uploaded the new data that encompasses all water boil notices from January 2022 to December of 2023 into my data-raw folder. This data also encompasses a few boil notices from 2024.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>water_boil_new <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data-raw/BWN_water_boil_new .xlsx"</span>) <span class="sc">|&gt;</span> <span class="fu">clean_names</span>() </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>water_boil_new </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6,655 × 16
+   issued              rescinded           pws_id   pws_name population pws_type
+   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;   
+ 1 2023-12-31 00:00:00 2024-01-01 00:00:00 TX14601… DAYTON …        203 C       
+ 2 2023-12-31 00:00:00 2024-01-04 00:00:00 TX18300… DEADWOO…       1176 C       
+ 3 2023-12-30 00:00:00 2024-01-02 00:00:00 TX01400… CITY OF…     151261 C       
+ 4 2023-12-30 00:00:00 2024-01-03 00:00:00 TX09600… RRA EST…        360 C       
+ 5 2023-12-30 00:00:00 2024-01-01 00:00:00 TX10121… HARRIS …       8013 C       
+ 6 2023-12-30 00:00:00 2024-01-03 00:00:00 TX10200… GUM SPR…       7815 C       
+ 7 2023-12-29 00:00:00 2024-01-06 00:00:00 TX00400… COPANO …       1668 C       
+ 8 2023-12-29 00:00:00 2024-01-03 00:00:00 TX16000… CITY OF…       2813 C       
+ 9 2023-12-29 00:00:00 2024-01-10 00:00:00 TX17400… APPLEBY…       5391 C       
+10 2023-12-29 00:00:00 2024-01-04 00:00:00 TX17400… D &amp; M W…       6570 C       
+# ℹ 6,645 more rows
+# ℹ 10 more variables: reason_activity &lt;chr&gt;, reason &lt;chr&gt;,
+#   affected_area_activity &lt;chr&gt;, affected_area &lt;chr&gt;, responsible_party &lt;chr&gt;,
+#   comments &lt;chr&gt;, region &lt;chr&gt;, county &lt;chr&gt;, reissued_count &lt;dbl&gt;,
+#   do_not_consume_use &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<p>Now we will glimpse the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>water_boil_new <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 6,655
+Columns: 16
+$ issued                 &lt;dttm&gt; 2023-12-31, 2023-12-31, 2023-12-30, 2023-12-30…
+$ rescinded              &lt;dttm&gt; 2024-01-01, 2024-01-04, 2024-01-02, 2024-01-03…
+$ pws_id                 &lt;chr&gt; "TX1460136", "TX1830025", "TX0140006", "TX09600…
+$ pws_name               &lt;chr&gt; "DAYTON OAKS ESTATE", "DEADWOOD WSC", "CITY OF …
+$ population             &lt;dbl&gt; 203, 1176, 151261, 360, 8013, 7815, 1668, 2813,…
+$ pws_type               &lt;chr&gt; "C", "C", "C", "C", "C", "C", "C", "C", "C", "C…
+$ reason_activity        &lt;chr&gt; "BWN - LOW DISTRIBUTION PRESSURE", "BWN - LOW D…
+$ reason                 &lt;chr&gt; "Due to MAINTENANCE AT THE PLANT", "Due to a br…
+$ affected_area_activity &lt;chr&gt; "BWN AFFECTED AREA - SYSTEMWIDE", "BWN AFFECTED…
+$ affected_area          &lt;chr&gt; "ALL", "Customers that live at 248 County Rod 4…
+$ responsible_party      &lt;chr&gt; "JOAQUIN MONTES", "DEBBIE ALLUMS", "COREY ANDRE…
+$ comments               &lt;chr&gt; "512-990-4400 X56109", "(903) 754-0100\r\n\r\n1…
+$ region                 &lt;chr&gt; "12", "5", "9", "1", "12", "5", "14", "8", "10"…
+$ county                 &lt;chr&gt; "LIBERTY", "PANOLA", "BELL", "HALL", "HARRIS", …
+$ reissued_count         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ do_not_consume_use     &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</code></pre>
+</div>
+</div>
+</section>
+<section id="cleaning-names-of-new-data" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-names-of-new-data">Cleaning names of new data</h2>
+<p>The older data and the newer data have different column names. In this new data I want to change “issued” and “rescinded” to “start_date” and “end_date.” I will change those last two columns when I change the variable to a date.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>water_boil_new_names <span class="ot">&lt;-</span> water_boil_new <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">nature =</span> reason</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>water_boil_new_names <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 6,655
+Columns: 17
+$ issued                 &lt;dttm&gt; 2023-12-31, 2023-12-31, 2023-12-30, 2023-12-30…
+$ rescinded              &lt;dttm&gt; 2024-01-01, 2024-01-04, 2024-01-02, 2024-01-03…
+$ pws_id                 &lt;chr&gt; "TX1460136", "TX1830025", "TX0140006", "TX09600…
+$ pws_name               &lt;chr&gt; "DAYTON OAKS ESTATE", "DEADWOOD WSC", "CITY OF …
+$ population             &lt;dbl&gt; 203, 1176, 151261, 360, 8013, 7815, 1668, 2813,…
+$ pws_type               &lt;chr&gt; "C", "C", "C", "C", "C", "C", "C", "C", "C", "C…
+$ reason_activity        &lt;chr&gt; "BWN - LOW DISTRIBUTION PRESSURE", "BWN - LOW D…
+$ reason                 &lt;chr&gt; "Due to MAINTENANCE AT THE PLANT", "Due to a br…
+$ affected_area_activity &lt;chr&gt; "BWN AFFECTED AREA - SYSTEMWIDE", "BWN AFFECTED…
+$ affected_area          &lt;chr&gt; "ALL", "Customers that live at 248 County Rod 4…
+$ responsible_party      &lt;chr&gt; "JOAQUIN MONTES", "DEBBIE ALLUMS", "COREY ANDRE…
+$ comments               &lt;chr&gt; "512-990-4400 X56109", "(903) 754-0100\r\n\r\n1…
+$ region                 &lt;chr&gt; "12", "5", "9", "1", "12", "5", "14", "8", "10"…
+$ county                 &lt;chr&gt; "LIBERTY", "PANOLA", "BELL", "HALL", "HARRIS", …
+$ reissued_count         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ do_not_consume_use     &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ nature                 &lt;chr&gt; "Due to MAINTENANCE AT THE PLANT", "Due to a br…</code></pre>
+</div>
+</div>
+</section>
+<section id="clean-dates" class="level2">
+<h2 class="anchored" data-anchor-id="clean-dates">Clean dates</h2>
+<p>It looks like our “start_date” column is facing the same excel date issue. We also have to change the end_date column so that is appears as a date variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>water_boil_dates_new <span class="ot">&lt;-</span> water_boil_new_names <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">start_date =</span> <span class="fu">mdy</span>(issued), </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">end_date =</span> <span class="fu">mdy</span>(rescinded)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 2 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `start_date = mdy(issued)`.
+Caused by warning:
+! All formats failed to parse. No formats found.
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>water_boil_dates_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6,655 × 19
+   issued              rescinded           pws_id   pws_name population pws_type
+   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;   
+ 1 2023-12-31 00:00:00 2024-01-01 00:00:00 TX14601… DAYTON …        203 C       
+ 2 2023-12-31 00:00:00 2024-01-04 00:00:00 TX18300… DEADWOO…       1176 C       
+ 3 2023-12-30 00:00:00 2024-01-02 00:00:00 TX01400… CITY OF…     151261 C       
+ 4 2023-12-30 00:00:00 2024-01-03 00:00:00 TX09600… RRA EST…        360 C       
+ 5 2023-12-30 00:00:00 2024-01-01 00:00:00 TX10121… HARRIS …       8013 C       
+ 6 2023-12-30 00:00:00 2024-01-03 00:00:00 TX10200… GUM SPR…       7815 C       
+ 7 2023-12-29 00:00:00 2024-01-06 00:00:00 TX00400… COPANO …       1668 C       
+ 8 2023-12-29 00:00:00 2024-01-03 00:00:00 TX16000… CITY OF…       2813 C       
+ 9 2023-12-29 00:00:00 2024-01-10 00:00:00 TX17400… APPLEBY…       5391 C       
+10 2023-12-29 00:00:00 2024-01-04 00:00:00 TX17400… D &amp; M W…       6570 C       
+# ℹ 6,645 more rows
+# ℹ 13 more variables: reason_activity &lt;chr&gt;, reason &lt;chr&gt;,
+#   affected_area_activity &lt;chr&gt;, affected_area &lt;chr&gt;, responsible_party &lt;chr&gt;,
+#   comments &lt;chr&gt;, region &lt;chr&gt;, county &lt;chr&gt;, reissued_count &lt;dbl&gt;,
+#   do_not_consume_use &lt;lgl&gt;, nature &lt;chr&gt;, start_date &lt;date&gt;, end_date &lt;date&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="remove-unnecessary-column" class="level2">
+<h2 class="anchored" data-anchor-id="remove-unnecessary-column">Remove unnecessary column</h2>
+<p>I checked in the original dataset if there was any row of data in the “do_not_consume_use” column and they were all N/A. We will remove this unnecessary column.</p>
 
 
 </section>
