@@ -115,19 +115,38 @@ water_boil_dates_new
 
 ```
 
+## Counting length of water boil notices 
+For my analysis I would like to look at the length of water boil notices and the counties where they are happening. In order to do this later I want to create a new column for the length of the water boil notices. 
+
+```{r}
+water_boil_length <- water_boil_dates_new |> 
+  mutate(
+    notice_length= rescinded - issued, .after = rescinded
+  )
+
+water_boil_length
+```
+
+
 ## Remove unnecessary column 
 
 I checked in the original dataset if there was any row of data in the "do_not_consume_use" column and they were all N/A. We will remove this unnecessary column with the filter option. I also want to remove the "end_date" and "start_date" column that are still in character format because I already created the new date column.  
 
 ```{r}
-water_boil_filter <- water_boil_dates_new |> 
+water_boil_filter <- water_boil_length |> 
   select(-c(end_date, start_date, do_not_consume_use)) 
 
 water_boil_filter
 
 ```
 
-
 ## Exporting clean data 
 
+
+```{r}
+
+```
+
+For analysis: 
+count by cities and region 
 
