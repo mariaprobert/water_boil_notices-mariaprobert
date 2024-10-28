@@ -2,3 +2,15 @@
 title: "Analysis"
 ---
 
+## Goals 
+
+The goal of this analysis is to find for data outliers, interesting localized pieces of data or anything that jumps out as interesting. Specifically, since I'm focusing on water boil notices, I want to identify anything that can lead to a potential story. 
+
+Questions for analysis: 
+
+- What cities and/or counties have the most amount of water boil notices? 
+- What cities and/or counties have the longest lasting water boil notices? 
+- What are the most common reasons for water boil notices? Are these statewide or localized problems? 
+- How many people in Texas are affected by water boil notices each year? 
+
+
