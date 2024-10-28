@@ -142,11 +142,12 @@ water_boil_filter
 
 ## Exporting clean data 
 
+Now that my data looks clean I will export to a new Quarto website page to start my analysis. 
 
 ```{r}
-
+ water_boil_clean <- water_boil_filter|>
+   write_rds("data-processed/01-water_boil.rds")
 ```
 
-For analysis: 
-count by cities and region 
+ 
 
