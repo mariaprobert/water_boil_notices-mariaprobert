@@ -60,7 +60,7 @@ More information here: https://www.texastribune.org/2022/12/07/boil-water-notice
 
 ## What cities and/or counties have the longest lasting water boil notices? 
 
-I want to look at the counties with the longest lasting notice lengths, so I want to look at an average to determine the county with the longest lasting notices, then keep the minimum and maximum amount of days that water boil notices last in that county. 
+I want to look at the counties with the longest lasting notice lengths, so I want to look at an average to determine the county with the longest lasting notices. Then, I also want to record the minimum and maximum amount of days that water boil notices last in each county. 
 
 Counties: 
 ```{r}
