@@ -13,4 +13,74 @@ Questions for analysis:
 - What are the most common reasons for water boil notices? Are these statewide or localized problems? 
 - How many people in Texas are affected by water boil notices each year? 
 
+##Loading up tidyverse 
 
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(janitor)
+library(readxl)
+```
+
+
+## Importing Clean Data 
+
+```{r}
+water_boil <- read_rds("data-processed/01-water_boil.rds")
+
+water_boil |> glimpse()
+```
+
+
+## What cities and/or counties have the most amount of water boil notices?
+
+Counties: 
+```{r}
+water_boil |>
+  group_by(county) |>
+  summarize(appearances = n()) |> 
+  arrange(desc(appearances))
+```
+
+Regions: 
+```{r}
+water_boil |>
+  group_by(region) |>
+  summarize(appearances = n()) |> 
+  arrange(desc(appearances))
+```
+
+Observations: Based on quick Google searches, the county with most water boil notices is Harris county (Houston area), Montgomery (area above Houston), Bell (which makes up Temple, Killeen, et.), and in fourth place is Brazoria county (south of Houston). This leads me to think that region 12 according to TCEQ probably encapsulates East Texas. 
+
+Data Takeaways: East Texas or the area near Houston is the area in Texas with the most amount of water boil notices. According to Texas Tribune, could be due to aging infrastructure (humidity?), flood issues and/or a large population. 
+
+More information here: https://www.texastribune.org/2022/12/07/boil-water-notices-rural-texas/
+
+## What cities and/or counties have the longest lasting water boil notices? 
+
+I want to look at the counties with the longest lasting notice lengths, so I want to look at an average to determine the county with the longest lasting notices, then keep the minimum and maximum amount of days that water boil notices last in that county. 
+
+Counties: 
+```{r}
+water_boil |>
+  group_by(county) |>
+  summarize(
+    average_notice_length = mean(notice_length),
+    min_notice_length = min(notice_length), 
+    max_notice_length = max(notice_length)
+    ) |>
+  arrange(desc(average_notice_length))
+## min and max 
+##|> 
+  ##arrange(desc(appearances))
+```
+
+Data Takeaways: look at top counties and average length location, etc. 
+
+compare to the most water boil notices? 
+
+Regions: 
+
+repeat same process as above. 
