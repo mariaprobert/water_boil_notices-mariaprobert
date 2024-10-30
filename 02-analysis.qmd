@@ -52,7 +52,7 @@ water_boil |>
   arrange(desc(appearances))
 ```
 
-Observations: Based on quick Google searches, the county with most water boil notices is Harris county (Houston area), Montgomery (area above Houston), Bell (which makes up Temple, Killeen, et.), and in fourth place is Brazoria county (south of Houston). This leads me to think that region 12 according to TCEQ probably encapsulates East Texas. 
+Based on quick Google searches, the county with the most amount of water boil notices is Harris county (Houston area), Montgomery (area above Houston), Bell (which makes up Temple, Killeen, et.), and in fourth place is Brazoria county (South of Houston). This leads me to think that region 12 according to TCEQ probably encapsulates East Texas. 
 
 Data Takeaways: East Texas or the area near Houston is the area in Texas with the most amount of water boil notices. According to Texas Tribune, could be due to aging infrastructure (humidity?), flood issues and/or a large population. 
 
@@ -60,7 +60,7 @@ More information here: https://www.texastribune.org/2022/12/07/boil-water-notice
 
 ## What cities and/or counties have the longest lasting water boil notices? 
 
-I want to look at the counties with the longest lasting notice lengths, so I want to look at an average to determine the county with the longest lasting notices. Then, I also want to record the minimum and maximum amount of days that water boil notices last in each county. 
+I want to look at the counties with the longest lasting notice lengths, so let's look at the average to determine the county with the longest lasting notices. Then, I also want to record the minimum and maximum amount of days that water boil notices last in each county. 
 
 Counties: 
 ```{r}
@@ -72,14 +72,11 @@ water_boil |>
     max_notice_length = max(notice_length)
     ) |>
   arrange(desc(average_notice_length)) 
-## min and max 
-##|> 
-  ##arrange(desc(appearances))
 ```
 
-None of the top three counties with longest lasting water boil notices show up in the list of most water boil notices. But this makes sense. East Austin has a higher population, therefore a higher demand for water boil notices to get resolved. 
+None of the top three counties with longest lasting water boil notices show up in the top of the list of most water boil notices. But this makes sense. East Austin has a higher population, therefore a higher demand for water and therefore a higher demand for water boil notices to get resolved. 
 
-Let's look at Live Oak as an example: 
+Let's look at Live Oak more closely: 
 
 
 ```{r}
@@ -91,9 +88,9 @@ filter(
 
 ```
 
-Live Oak county is located South of San Antonio and has a very small population, but the water boil notices affect all residents in the area. Most recent one happened in June and lasted almost a year. Compared to Harris 
+Live Oak county is located South of San Antonio and has a very small population, but the water boil notices affect all residents in the area where the public water system is located. Most recent one happened in June and lasted almost a year. 
 
-Now I want to look at the top three counties with the most water boil notices and check how long their water boil notices last. 
+Now, I want to look at the top three counties with the most water boil notices and check how long their water boil notices last. 
 
 Let's look at Harris as an example: 
 
@@ -111,10 +108,33 @@ water_boil |>
   )
 ```
 
+When I check for Harris we get NA, which could just mean that there are still pending water boil notices so the data can't calculate the average, minimum and maximum length of water boil notices in the area. 
 
-Data Takeaways: Counties with the longest lasting water boil notices tend to have smaller populations. The top two counties with the longest lasting notices are located South of San Antonio.  
+Data Takeaways: 
+
+- Counties with the longest lasting water boil notices tend to have smaller populations. The top two counties with the longest lasting notices are located South of San Antonio.
+- Harris county has at least one pending water boil notice at the time this data was collected. 
 
 
 Regions: 
 
-repeat same process as above. 
+Now let's check regions with the longest lasting water boil notices: 
+
+```{r}
+water_boil |>
+  group_by(region) |>
+  summarize(
+    average_notice_length = mean(notice_length),
+    min_notice_length = min(notice_length), 
+    max_notice_length = max(notice_length)
+    ) |>
+  arrange(desc(average_notice_length)) 
+```
+
+Data Takeaways: 
+
+- Region 15 could be the area around Live Oak and Duval counties. The longest lasting water boil notice in that region is 339 days. The average length of water boil notices in region 15 is 19 days. 
+- 12 out of the 16 regions designated by TCEQ in Texas have at least one ongoing water boil notice at the time this data was collected. 
+
+TCEQ hasn't answered my question about what the regions are yet...
+
