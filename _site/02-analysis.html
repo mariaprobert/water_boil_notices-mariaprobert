@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -108,7 +142,16 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#importing-clean-data" id="toc-importing-clean-data" class="nav-link" data-scroll-target="#importing-clean-data">Importing Clean Data</a></li>
+  <li><a href="#what-cities-andor-counties-have-the-most-amount-of-water-boil-notices" id="toc-what-cities-andor-counties-have-the-most-amount-of-water-boil-notices" class="nav-link" data-scroll-target="#what-cities-andor-counties-have-the-most-amount-of-water-boil-notices">What cities and/or counties have the most amount of water boil notices?</a></li>
+  <li><a href="#what-cities-andor-counties-have-the-longest-lasting-water-boil-notices" id="toc-what-cities-andor-counties-have-the-longest-lasting-water-boil-notices" class="nav-link" data-scroll-target="#what-cities-andor-counties-have-the-longest-lasting-water-boil-notices">What cities and/or counties have the longest lasting water boil notices?</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -132,8 +175,227 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<p>The goal of this analysis is to find for data outliers, interesting localized pieces of data or anything that jumps out as interesting. Specifically, since I’m focusing on water boil notices, I want to identify anything that can lead to a potential story.</p>
+<p>Questions for analysis:</p>
+<ul>
+<li>What cities and/or counties have the most amount of water boil notices?</li>
+<li>What cities and/or counties have the longest lasting water boil notices?</li>
+<li>What are the most common reasons for water boil notices? Are these statewide or localized problems?</li>
+<li>How many people in Texas are affected by water boil notices each year?</li>
+</ul>
+<p>##Loading up tidyverse</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="importing-clean-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-clean-data">Importing Clean Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data-processed/01-water_boil.rds"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>water_boil </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6,655 × 17
+   issued              rescinded           notice_length pws_id    pws_name     
+   &lt;dttm&gt;              &lt;dttm&gt;              &lt;drtn&gt;        &lt;chr&gt;     &lt;chr&gt;        
+ 1 2023-12-31 00:00:00 2024-01-01 00:00:00  1 days       TX1460136 DAYTON OAKS …
+ 2 2023-12-31 00:00:00 2024-01-04 00:00:00  4 days       TX1830025 DEADWOOD WSC 
+ 3 2023-12-30 00:00:00 2024-01-02 00:00:00  3 days       TX0140006 CITY OF KILL…
+ 4 2023-12-30 00:00:00 2024-01-03 00:00:00  4 days       TX0960001 RRA ESTELLIN…
+ 5 2023-12-30 00:00:00 2024-01-01 00:00:00  2 days       TX1012133 HARRIS COUNT…
+ 6 2023-12-30 00:00:00 2024-01-03 00:00:00  4 days       TX1020081 GUM SPRINGS …
+ 7 2023-12-29 00:00:00 2024-01-06 00:00:00  8 days       TX0040003 COPANO COVE …
+ 8 2023-12-29 00:00:00 2024-01-03 00:00:00  5 days       TX1600001 CITY OF MASON
+ 9 2023-12-29 00:00:00 2024-01-10 00:00:00 12 days       TX1740005 APPLEBY WSC  
+10 2023-12-29 00:00:00 2024-01-04 00:00:00  6 days       TX1740010 D &amp; M WSC    
+# ℹ 6,645 more rows
+# ℹ 12 more variables: population &lt;dbl&gt;, pws_type &lt;chr&gt;, reason_activity &lt;chr&gt;,
+#   reason &lt;chr&gt;, affected_area_activity &lt;chr&gt;, affected_area &lt;chr&gt;,
+#   responsible_party &lt;chr&gt;, comments &lt;chr&gt;, region &lt;chr&gt;, county &lt;chr&gt;,
+#   reissued_count &lt;dbl&gt;, nature &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="what-cities-andor-counties-have-the-most-amount-of-water-boil-notices" class="level2">
+<h2 class="anchored" data-anchor-id="what-cities-andor-counties-have-the-most-amount-of-water-boil-notices">What cities and/or counties have the most amount of water boil notices?</h2>
+<p>Counties:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 223 × 2
+   county     appearances
+   &lt;chr&gt;            &lt;int&gt;
+ 1 HARRIS             725
+ 2 MONTGOMERY         357
+ 3 BELL               309
+ 4 BRAZORIA           258
+ 5 HOUSTON            246
+ 6 TRAVIS             232
+ 7 POLK               164
+ 8 LIBERTY            131
+ 9 HARRISON           129
+10 CHEROKEE           116
+# ℹ 213 more rows</code></pre>
+</div>
+</div>
+<p>Regions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 2
+   region appearances
+   &lt;chr&gt;        &lt;int&gt;
+ 1 12            1716
+ 2 10            1065
+ 3 5              920
+ 4 9              708
+ 5 4              678
+ 6 11             443
+ 7 3              373
+ 8 13             225
+ 9 14             108
+10 1               97
+11 16              80
+12 2               74
+13 6               45
+14 7               43
+15 8               43
+16 15              37</code></pre>
+</div>
+</div>
+<p>Based on quick Google searches, the county with the most amount of water boil notices is Harris county (Houston area), Montgomery (area above Houston), Bell (which makes up Temple, Killeen, et.), and in fourth place is Brazoria county (South of Houston). This leads me to think that region 12 according to TCEQ probably encapsulates East Texas.</p>
+<p>Data Takeaways: East Texas or the area near Houston is the area in Texas with the most amount of water boil notices. According to Texas Tribune, could be due to aging infrastructure (humidity?), flood issues and/or a large population.</p>
+<p>More information here: https://www.texastribune.org/2022/12/07/boil-water-notices-rural-texas/</p>
+</section>
+<section id="what-cities-andor-counties-have-the-longest-lasting-water-boil-notices" class="level2">
+<h2 class="anchored" data-anchor-id="what-cities-andor-counties-have-the-longest-lasting-water-boil-notices">What cities and/or counties have the longest lasting water boil notices?</h2>
+<p>I want to look at the counties with the longest lasting notice lengths, so let’s look at the average to determine the county with the longest lasting notices. Then, I also want to record the minimum and maximum amount of days that water boil notices last in each county.</p>
+<p>Counties:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length), </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 223 × 4
+   county        average_notice_length min_notice_length max_notice_length
+   &lt;chr&gt;         &lt;drtn&gt;                &lt;drtn&gt;            &lt;drtn&gt;           
+ 1 LIVE OAK      219.00000 days         3 days           366 days         
+ 2 DUVAL         170.00000 days         5 days           335 days         
+ 3 TITUS         125.00000 days         2 days           370 days         
+ 4 WOOD          114.57143 days         1 days           759 days         
+ 5 KENT           60.60000 days         3 days           271 days         
+ 6 GREGG          49.68182 days         1 days           493 days         
+ 7 COLLINGSWORTH  48.20000 days         2 days           223 days         
+ 8 DICKENS        48.00000 days         1 days           182 days         
+ 9 PRESIDIO       38.00000 days        38 days            38 days         
+10 MCCULLOCH      36.45455 days         2 days           368 days         
+# ℹ 213 more rows</code></pre>
+</div>
+</div>
+<p>None of the top three counties with longest lasting water boil notices show up in the top of the list of most water boil notices. But this makes sense. East Austin has a higher population, therefore a higher demand for water and therefore a higher demand for water boil notices to get resolved.</p>
+<p>Let’s look at Live Oak more closely:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  county <span class="sc">==</span> <span class="st">"LIVE OAK"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, population, issued, rescinded, notice_length, reason_activity, reason, affected_area_activity, affected_area)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 9
+  county   population issued              rescinded           notice_length
+  &lt;chr&gt;         &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;drtn&gt;       
+1 LIVE OAK         80 2023-08-23 00:00:00 2024-06-06 00:00:00 288 days     
+2 LIVE OAK       4428 2022-01-25 00:00:00 2022-01-28 00:00:00   3 days     
+3 LIVE OAK        117 2022-01-03 00:00:00 2023-01-04 00:00:00 366 days     
+# ℹ 4 more variables: reason_activity &lt;chr&gt;, reason &lt;chr&gt;,
+#   affected_area_activity &lt;chr&gt;, affected_area &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Live Oak county is located South of San Antonio and has a very small population, but the water boil notices affect all residents in the area where the public water system is located. Most recent one happened in June and lasted almost a year.</p>
+<p>Now, I want to look at the top three counties with the most water boil notices and check how long their water boil notices last.</p>
+<p>Let’s look at Harris as an example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length), </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"HARRIS"</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  county average_notice_length min_notice_length max_notice_length
+  &lt;chr&gt;  &lt;drtn&gt;                &lt;drtn&gt;            &lt;drtn&gt;           
+1 HARRIS NA days               NA days           NA days          </code></pre>
+</div>
+</div>
+<p>When I check for Harris we get NA, which could just mean that there are still pending water boil notices so the data can’t calculate the average, minimum and maximum length of water boil notices in the area.</p>
+<p>Data Takeaways:</p>
+<ul>
+<li>Counties with the longest lasting water boil notices tend to have smaller populations. The top two counties with the longest lasting notices are located South of San Antonio.</li>
+<li>Harris county has at least one pending water boil notice at the time this data was collected.</li>
+</ul>
+<p>Regions:</p>
+<p>Now let’s check regions with the longest lasting water boil notices:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length), </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 4
+   region average_notice_length min_notice_length max_notice_length
+   &lt;chr&gt;  &lt;drtn&gt;                &lt;drtn&gt;            &lt;drtn&gt;           
+ 1 15     19.054054 days         1 days           339 days         
+ 2 8      12.813953 days         1 days           368 days         
+ 3 11     11.661400 days         1 days           614 days         
+ 4 1       8.453608 days         1 days           223 days         
+ 5 10            NA days        NA days            NA days         
+ 6 12            NA days        NA days            NA days         
+ 7 13            NA days        NA days            NA days         
+ 8 14            NA days        NA days            NA days         
+ 9 16            NA days        NA days            NA days         
+10 2             NA days        NA days            NA days         
+11 3             NA days        NA days            NA days         
+12 4             NA days        NA days            NA days         
+13 5             NA days        NA days            NA days         
+14 6             NA days        NA days            NA days         
+15 7             NA days        NA days            NA days         
+16 9             NA days        NA days            NA days         </code></pre>
+</div>
+</div>
+<p>Data Takeaways:</p>
+<ul>
+<li>Region 15 could be the area around Live Oak and Duval counties. The longest lasting water boil notice in that region is 339 days. The average length of water boil notices in region 15 is 19 days.</li>
+<li>12 out of the 16 regions designated by TCEQ in Texas have at least one ongoing water boil notice at the time this data was collected.</li>
+</ul>
+<p>TCEQ hasn’t answered my question about what the regions are yet…</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -8,8 +8,9 @@ The goal of this analysis is to find for data outliers, interesting localized pi
 
 Questions for analysis: 
 
-- What cities and/or counties have the most amount of water boil notices? 
-- What cities and/or counties have the longest lasting water boil notices? 
+- What counties and/or regions have the most amount of water boil notices? 
+- What counties and/or regions have the longest lasting water boil notices?
+- What do ongoing water boil notices look like? 
 - What are the most common reasons for water boil notices? Are these statewide or localized problems? 
 - How many people in Texas are affected by water boil notices each year? 
 
@@ -34,7 +35,7 @@ water_boil
 ```
 
 
-## What cities and/or counties have the most amount of water boil notices?
+## What counties and/or regions have the most amount of water boil notices?
 
 Counties: 
 ```{r}
@@ -58,18 +59,18 @@ Data Takeaways: East Texas or the area near Houston is the area in Texas with th
 
 More information here: https://www.texastribune.org/2022/12/07/boil-water-notices-rural-texas/
 
-## What cities and/or counties have the longest lasting water boil notices? 
+## What counties and/or regions have the longest lasting water boil notices? 
 
 I want to look at the counties with the longest lasting notice lengths, so let's look at the average to determine the county with the longest lasting notices. Then, I also want to record the minimum and maximum amount of days that water boil notices last in each county. 
 
-Counties: 
+Counties (last 2 ***): 
 ```{r}
 water_boil |>
   group_by(county) |>
   summarize(
-    average_notice_length = mean(notice_length),
-    min_notice_length = min(notice_length), 
-    max_notice_length = max(notice_length)
+    average_notice_length = mean(notice_length, na.rm = TRUE),
+    min_notice_length = min(notice_length, na.rm = TRUE), 
+    max_notice_length = max(notice_length, na.rm = TRUE)
     ) |>
   arrange(desc(average_notice_length)) 
 ```
@@ -84,7 +85,7 @@ water_boil |>
 filter(
   county == "LIVE OAK"
 ) |>
-  select(county, population, issued, rescinded, notice_length, reason_activity, reason, affected_area_activity, affected_area)
+  select(county, population, issued, rescinded, notice_length, reason_activity, reason, affected_area_activity, affected_area, pws_name)
 
 ```
 
@@ -98,9 +99,9 @@ Let's look at Harris as an example:
 water_boil |>
   group_by(county) |>
   summarize(
-    average_notice_length = mean(notice_length),
-    min_notice_length = min(notice_length), 
-    max_notice_length = max(notice_length)
+    average_notice_length = mean(notice_length, na.rm = TRUE),
+    min_notice_length = min(notice_length, na.rm = TRUE), 
+    max_notice_length = max(notice_length, na.rm = TRUE)
     ) |>
   arrange(desc(average_notice_length)) |>
   filter(
@@ -108,7 +109,9 @@ water_boil |>
   )
 ```
 
-When I check for Harris we get NA, which could just mean that there are still pending water boil notices so the data can't calculate the average, minimum and maximum length of water boil notices in the area. 
+When I check for Harris we get NA, which could just mean that there are still pending water boil notices so the data can't calculate the average, minimum and maximum length of water boil notices in the area.
+
+To check the length of the water boil notices that have been rescinded, I added "na.rm = TRUE." 
 
 Data Takeaways: 
 
@@ -124,17 +127,73 @@ Now let's check regions with the longest lasting water boil notices:
 water_boil |>
   group_by(region) |>
   summarize(
-    average_notice_length = mean(notice_length),
-    min_notice_length = min(notice_length), 
-    max_notice_length = max(notice_length)
+    average_notice_length = mean(notice_length, na.rm = TRUE),
+    min_notice_length = min(notice_length, na.rm = TRUE), 
+    max_notice_length = max(notice_length, na.rm = TRUE)
     ) |>
   arrange(desc(average_notice_length)) 
 ```
+If I don't remove the NA examples, 12 out of the 16 regions designated by TCEQ in Texas have at least one ongoing water boil notice at the time this data was collected.
 
 Data Takeaways: 
 
-- Region 15 could be the area around Live Oak and Duval counties. The longest lasting water boil notice in that region is 339 days. The average length of water boil notices in region 15 is 19 days. 
+- Region 16 could be the area around Live Oak and Duval counties. The highest average of water boil notice length is 29 days. 
 - 12 out of the 16 regions designated by TCEQ in Texas have at least one ongoing water boil notice at the time this data was collected. 
 
 TCEQ hasn't answered my question about what the regions are yet...
+
+## What do ongoing water boil notices look like? 
+
+The original results for the duration of the water boil notices gave us a lot of NA results, which point to water boil notices that are ongoing at the time the data was collected.  
+
+Let's look at the amount of ongoing water boil notices in each county in the time span of Jan. 2022 to the start of 2024. 
+```{r}
+water_boil |>
+  filter(if_any(c(rescinded, notice_length), is.na)) |> 
+  group_by(county) |>
+ summarize(appearances = n()) |> 
+ arrange(desc(appearances))
+```
+
+Let's look at the water boil notices in Harris: 
+
+```{r}
+water_boil |>
+  filter(if_any(c(rescinded, notice_length), is.na)) |> 
+  group_by(county) |>
+  filter(county == "HARRIS")
+```
+
+Let's add up the population affected by ongoing water notices in Harris county: 
+
+```{r}
+water_boil |>
+  filter(if_any(c(rescinded, notice_length), is.na)) |> 
+  group_by(county) |>
+  filter(county == "HARRIS") |>
+  summarise(harris_population_notice = sum(population))
+```
+
+In Harris county at the time that this data was collected at least 13,594 people were affected by water boil notices. 
+
+Let's look at the total population affected by water boil notices in each county: 
+
+```{r}
+water_boil |>
+  filter(if_any(c(rescinded, notice_length), is.na)) |> 
+  group_by(county) |>
+  summarise(county_population_notice = sum(population)) |>
+  arrange(desc(county_population_notice))
+```
+
+Let's try this by region and look at populations under water boil notices by region: 
+
+Now let's look at the total population in Texas under ongoing water boil notices: 
+
+```{r}
+water_boil |>
+  filter(if_any(c(rescinded, notice_length), is.na)) |> 
+  summarise(texas_population_notice = sum(population)) 
+```
+
 
