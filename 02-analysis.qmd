@@ -30,7 +30,7 @@ library(readxl)
 ```{r}
 water_boil <- read_rds("data-processed/01-water_boil.rds")
 
-water_boil |> glimpse()
+water_boil 
 ```
 
 
@@ -71,15 +71,49 @@ water_boil |>
     min_notice_length = min(notice_length), 
     max_notice_length = max(notice_length)
     ) |>
-  arrange(desc(average_notice_length))
+  arrange(desc(average_notice_length)) 
 ## min and max 
 ##|> 
   ##arrange(desc(appearances))
 ```
 
-Data Takeaways: look at top counties and average length location, etc. 
+None of the top three counties with longest lasting water boil notices show up in the list of most water boil notices. But this makes sense. East Austin has a higher population, therefore a higher demand for water boil notices to get resolved. 
 
-compare to the most water boil notices? 
+Let's look at Live Oak as an example: 
+
+
+```{r}
+water_boil |>
+filter(
+  county == "LIVE OAK"
+) |>
+  select(county, population, issued, rescinded, notice_length, reason_activity, reason, affected_area_activity, affected_area)
+
+```
+
+Live Oak county is located South of San Antonio and has a very small population, but the water boil notices affect all residents in the area. Most recent one happened in June and lasted almost a year. Compared to Harris 
+
+Now I want to look at the top three counties with the most water boil notices and check how long their water boil notices last. 
+
+Let's look at Harris as an example: 
+
+```{r}
+water_boil |>
+  group_by(county) |>
+  summarize(
+    average_notice_length = mean(notice_length),
+    min_notice_length = min(notice_length), 
+    max_notice_length = max(notice_length)
+    ) |>
+  arrange(desc(average_notice_length)) |>
+  filter(
+    county == "HARRIS"
+  )
+```
+
+
+Data Takeaways: Counties with the longest lasting water boil notices tend to have smaller populations. The top two counties with the longest lasting notices are located South of San Antonio.  
+
 
 Regions: 
 
