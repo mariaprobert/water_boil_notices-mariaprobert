@@ -148,8 +148,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
   <li><a href="#importing-clean-data" id="toc-importing-clean-data" class="nav-link" data-scroll-target="#importing-clean-data">Importing Clean Data</a></li>
-  <li><a href="#what-cities-andor-counties-have-the-most-amount-of-water-boil-notices" id="toc-what-cities-andor-counties-have-the-most-amount-of-water-boil-notices" class="nav-link" data-scroll-target="#what-cities-andor-counties-have-the-most-amount-of-water-boil-notices">What cities and/or counties have the most amount of water boil notices?</a></li>
-  <li><a href="#what-cities-andor-counties-have-the-longest-lasting-water-boil-notices" id="toc-what-cities-andor-counties-have-the-longest-lasting-water-boil-notices" class="nav-link" data-scroll-target="#what-cities-andor-counties-have-the-longest-lasting-water-boil-notices">What cities and/or counties have the longest lasting water boil notices?</a></li>
+  <li><a href="#what-counties-andor-regions-have-the-most-amount-of-water-boil-notices" id="toc-what-counties-andor-regions-have-the-most-amount-of-water-boil-notices" class="nav-link" data-scroll-target="#what-counties-andor-regions-have-the-most-amount-of-water-boil-notices">What counties and/or regions have the most amount of water boil notices?</a></li>
+  <li><a href="#what-counties-andor-regions-have-the-longest-lasting-water-boil-notices" id="toc-what-counties-andor-regions-have-the-longest-lasting-water-boil-notices" class="nav-link" data-scroll-target="#what-counties-andor-regions-have-the-longest-lasting-water-boil-notices">What counties and/or regions have the longest lasting water boil notices?</a></li>
+  <li><a href="#what-do-ongoing-water-boil-notices-look-like" id="toc-what-do-ongoing-water-boil-notices-look-like" class="nav-link" data-scroll-target="#what-do-ongoing-water-boil-notices-look-like">What do ongoing water boil notices look like?</a></li>
+  <li><a href="#what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems" id="toc-what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems" class="nav-link" data-scroll-target="#what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems">What are the most common reasons for water boil notices? Are these statewide or localized problems?</a></li>
+  <li><a href="#how-many-people-in-texas-are-affected-by-water-boil-notices-each-year" id="toc-how-many-people-in-texas-are-affected-by-water-boil-notices-each-year" class="nav-link" data-scroll-target="#how-many-people-in-texas-are-affected-by-water-boil-notices-each-year">How many people in Texas are affected by water boil notices each year?</a></li>
   </ul>
 </nav>
     </div>
@@ -180,8 +183,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The goal of this analysis is to find for data outliers, interesting localized pieces of data or anything that jumps out as interesting. Specifically, since I’m focusing on water boil notices, I want to identify anything that can lead to a potential story.</p>
 <p>Questions for analysis:</p>
 <ul>
-<li>What cities and/or counties have the most amount of water boil notices?</li>
-<li>What cities and/or counties have the longest lasting water boil notices?</li>
+<li>What counties and/or regions have the most amount of water boil notices?</li>
+<li>What counties and/or regions have the longest lasting water boil notices?</li>
+<li>What do ongoing water boil notices look like?</li>
 <li>What are the most common reasons for water boil notices? Are these statewide or localized problems?</li>
 <li>How many people in Texas are affected by water boil notices each year?</li>
 </ul>
@@ -220,8 +224,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="what-cities-andor-counties-have-the-most-amount-of-water-boil-notices" class="level2">
-<h2 class="anchored" data-anchor-id="what-cities-andor-counties-have-the-most-amount-of-water-boil-notices">What cities and/or counties have the most amount of water boil notices?</h2>
+<section id="what-counties-andor-regions-have-the-most-amount-of-water-boil-notices" class="level2">
+<h2 class="anchored" data-anchor-id="what-counties-andor-regions-have-the-most-amount-of-water-boil-notices">What counties and/or regions have the most amount of water boil notices?</h2>
 <p>Counties:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
@@ -277,19 +281,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Data Takeaways: East Texas or the area near Houston is the area in Texas with the most amount of water boil notices. According to Texas Tribune, could be due to aging infrastructure (humidity?), flood issues and/or a large population.</p>
 <p>More information here: https://www.texastribune.org/2022/12/07/boil-water-notices-rural-texas/</p>
 </section>
-<section id="what-cities-andor-counties-have-the-longest-lasting-water-boil-notices" class="level2">
-<h2 class="anchored" data-anchor-id="what-cities-andor-counties-have-the-longest-lasting-water-boil-notices">What cities and/or counties have the longest lasting water boil notices?</h2>
+<section id="what-counties-andor-regions-have-the-longest-lasting-water-boil-notices" class="level2">
+<h2 class="anchored" data-anchor-id="what-counties-andor-regions-have-the-longest-lasting-water-boil-notices">What counties and/or regions have the longest lasting water boil notices?</h2>
 <p>I want to look at the counties with the longest lasting notice lengths, so let’s look at the average to determine the county with the longest lasting notices. Then, I also want to record the minimum and maximum amount of days that water boil notices last in each county.</p>
-<p>Counties:</p>
+<p>Counties (last 2 *** ERROS?!):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length), </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 4 warnings in `summarize()`.
+The first warning was:
+ℹ In argument: `min_notice_length = min(notice_length, na.rm = TRUE)`.
+ℹ In group 194: `county = "TERRY"`.
+Caused by warning in `min()`:
+! no non-missing arguments to min; returning Inf
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 3 remaining warnings.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 223 × 4
    county        average_notice_length min_notice_length max_notice_length
@@ -302,53 +315,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  6 GREGG          49.68182 days         1 days           493 days         
  7 COLLINGSWORTH  48.20000 days         2 days           223 days         
  8 DICKENS        48.00000 days         1 days           182 days         
- 9 PRESIDIO       38.00000 days        38 days            38 days         
-10 MCCULLOCH      36.45455 days         2 days           368 days         
+ 9 BRAZOS         40.77778 days         1 days           234 days         
+10 PRESIDIO       38.00000 days        38 days            38 days         
 # ℹ 213 more rows</code></pre>
 </div>
 </div>
 <p>None of the top three counties with longest lasting water boil notices show up in the top of the list of most water boil notices. But this makes sense. East Austin has a higher population, therefore a higher demand for water and therefore a higher demand for water boil notices to get resolved.</p>
 <p>Let’s look at Live Oak more closely:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  county <span class="sc">==</span> <span class="st">"LIVE OAK"</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, population, issued, rescinded, notice_length, reason_activity, reason, affected_area_activity, affected_area)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  county <span class="sc">==</span> <span class="st">"LIVE OAK"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, population, issued, rescinded, notice_length, reason_activity, reason, affected_area_activity, affected_area, pws_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 9
+<pre><code># A tibble: 3 × 10
   county   population issued              rescinded           notice_length
   &lt;chr&gt;         &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;drtn&gt;       
 1 LIVE OAK         80 2023-08-23 00:00:00 2024-06-06 00:00:00 288 days     
 2 LIVE OAK       4428 2022-01-25 00:00:00 2022-01-28 00:00:00   3 days     
 3 LIVE OAK        117 2022-01-03 00:00:00 2023-01-04 00:00:00 366 days     
-# ℹ 4 more variables: reason_activity &lt;chr&gt;, reason &lt;chr&gt;,
-#   affected_area_activity &lt;chr&gt;, affected_area &lt;chr&gt;</code></pre>
+# ℹ 5 more variables: reason_activity &lt;chr&gt;, reason &lt;chr&gt;,
+#   affected_area_activity &lt;chr&gt;, affected_area &lt;chr&gt;, pws_name &lt;chr&gt;</code></pre>
 </div>
 </div>
 <p>Live Oak county is located South of San Antonio and has a very small population, but the water boil notices affect all residents in the area where the public water system is located. Most recent one happened in June and lasted almost a year.</p>
 <p>Now, I want to look at the top three counties with the most water boil notices and check how long their water boil notices last.</p>
 <p>Let’s look at Harris as an example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length), </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) <span class="sc">|&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"HARRIS"</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) <span class="sc">|&gt;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"HARRIS"</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 4 warnings in `summarize()`.
+The first warning was:
+ℹ In argument: `min_notice_length = min(notice_length, na.rm = TRUE)`.
+ℹ In group 194: `county = "TERRY"`.
+Caused by warning in `min()`:
+! no non-missing arguments to min; returning Inf
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 3 remaining warnings.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   county average_notice_length min_notice_length max_notice_length
   &lt;chr&gt;  &lt;drtn&gt;                &lt;drtn&gt;            &lt;drtn&gt;           
-1 HARRIS NA days               NA days           NA days          </code></pre>
+1 HARRIS 8.65742 days          1 days            472 days         </code></pre>
 </div>
 </div>
 <p>When I check for Harris we get NA, which could just mean that there are still pending water boil notices so the data can’t calculate the average, minimum and maximum length of water boil notices in the area.</p>
+<p>To check the length of the water boil notices that have been rescinded, I added “na.rm = TRUE.”</p>
 <p>Data Takeaways:</p>
 <ul>
 <li>Counties with the longest lasting water boil notices tend to have smaller populations. The top two counties with the longest lasting notices are located South of San Antonio.</li>
@@ -357,42 +380,224 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Regions:</p>
 <p>Now let’s check regions with the longest lasting water boil notices:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length), </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 4
    region average_notice_length min_notice_length max_notice_length
    &lt;chr&gt;  &lt;drtn&gt;                &lt;drtn&gt;            &lt;drtn&gt;           
- 1 15     19.054054 days         1 days           339 days         
- 2 8      12.813953 days         1 days           368 days         
- 3 11     11.661400 days         1 days           614 days         
- 4 1       8.453608 days         1 days           223 days         
- 5 10            NA days        NA days            NA days         
- 6 12            NA days        NA days            NA days         
- 7 13            NA days        NA days            NA days         
- 8 14            NA days        NA days            NA days         
- 9 16            NA days        NA days            NA days         
-10 2             NA days        NA days            NA days         
-11 3             NA days        NA days            NA days         
-12 4             NA days        NA days            NA days         
-13 5             NA days        NA days            NA days         
-14 6             NA days        NA days            NA days         
-15 7             NA days        NA days            NA days         
-16 9             NA days        NA days            NA days         </code></pre>
+ 1 16     29.164557 days        2 days            335 days         
+ 2 15     19.054054 days        1 days            339 days         
+ 3 14     16.915094 days        1 days            366 days         
+ 4 6      15.136364 days        2 days            136 days         
+ 5 10     14.660664 days        1 days            792 days         
+ 6 5      13.520352 days        1 days            759 days         
+ 7 8      12.813953 days        1 days            368 days         
+ 8 2      12.027778 days        1 days            182 days         
+ 9 11     11.661400 days        1 days            614 days         
+10 4      11.342900 days        1 days            477 days         
+11 12      9.452311 days        1 days            472 days         
+12 9       9.037196 days        1 days            621 days         
+13 7       8.731707 days        1 days             40 days         
+14 1       8.453608 days        1 days            223 days         
+15 3       8.204301 days        1 days            487 days         
+16 13      6.747706 days        1 days            173 days         </code></pre>
 </div>
 </div>
+<p>If I don’t remove the NA examples, 12 out of the 16 regions designated by TCEQ in Texas have at least one ongoing water boil notice at the time this data was collected.</p>
 <p>Data Takeaways:</p>
 <ul>
-<li>Region 15 could be the area around Live Oak and Duval counties. The longest lasting water boil notice in that region is 339 days. The average length of water boil notices in region 15 is 19 days.</li>
+<li>Region 16 could be the area around Live Oak and Duval counties. The highest average of water boil notice length is 29 days.</li>
 <li>12 out of the 16 regions designated by TCEQ in Texas have at least one ongoing water boil notice at the time this data was collected.</li>
 </ul>
 <p>TCEQ hasn’t answered my question about what the regions are yet…</p>
+</section>
+<section id="what-do-ongoing-water-boil-notices-look-like" class="level2">
+<h2 class="anchored" data-anchor-id="what-do-ongoing-water-boil-notices-look-like">What do ongoing water boil notices look like?</h2>
+<p>The original results for the duration of the water boil notices gave us a lot of NA results, which point to water boil notices that are ongoing at the time the data was collected.</p>
+<p>Let’s look at the amount of ongoing water boil notices in each county in the time span of Jan.&nbsp;2022 to the start of 2024.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 42 × 2
+   county    appearances
+   &lt;chr&gt;           &lt;int&gt;
+ 1 HARRIS              4
+ 2 JOHNSON             4
+ 3 WISE                4
+ 4 CHEROKEE            3
+ 5 HENDERSON           3
+ 6 POLK                3
+ 7 BRAZOS              2
+ 8 BURLESON            2
+ 9 COMAL               2
+10 DENTON              2
+# ℹ 32 more rows</code></pre>
+</div>
+</div>
+<p>Let’s look at the water boil notices in Harris:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"HARRIS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 17
+# Groups:   county [1]
+  issued              rescinded notice_length pws_id    pws_name            
+  &lt;dttm&gt;              &lt;dttm&gt;    &lt;drtn&gt;        &lt;chr&gt;     &lt;chr&gt;               
+1 2023-11-15 00:00:00 NA        NA days       TX1011690 HARRIS COUNTY MUD 70
+2 2023-11-08 00:00:00 NA        NA days       TX1013025 STRACK ROAD STORAGE 
+3 2023-10-04 00:00:00 NA        NA days       TX1010212 BAYER WATER SYSTEM  
+4 2023-04-20 00:00:00 NA        NA days       TX1013156 HARRIS COUNTY UD 16 
+# ℹ 12 more variables: population &lt;dbl&gt;, pws_type &lt;chr&gt;, reason_activity &lt;chr&gt;,
+#   reason &lt;chr&gt;, affected_area_activity &lt;chr&gt;, affected_area &lt;chr&gt;,
+#   responsible_party &lt;chr&gt;, comments &lt;chr&gt;, region &lt;chr&gt;, county &lt;chr&gt;,
+#   reissued_count &lt;dbl&gt;, nature &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Let’s add up the population affected by ongoing water notices in Harris county:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"HARRIS"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">harris_population_notice =</span> <span class="fu">sum</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  county harris_population_notice
+  &lt;chr&gt;                     &lt;dbl&gt;
+1 HARRIS                    13594</code></pre>
+</div>
+</div>
+<p>Data Takeaways: In Harris county at the time that this data was collected at least 13,594 people were affected by water boil notices.</p>
+<p>Let’s look at the total population affected by water boil notices in each county:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">county_population_notice =</span> <span class="fu">sum</span>(population)) <span class="sc">|&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(county_population_notice))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 42 × 2
+   county   county_population_notice
+   &lt;chr&gt;                       &lt;dbl&gt;
+ 1 HARRIS                      13594
+ 2 SMITH                        9113
+ 3 MCLENNAN                     4773
+ 4 BURLESON                     3263
+ 5 ANGELINA                     2211
+ 6 CASS                         1888
+ 7 CHEROKEE                     1827
+ 8 RUSK                         1734
+ 9 WISE                         1610
+10 DENTON                       1584
+# ℹ 32 more rows</code></pre>
+</div>
+</div>
+<p>Let’s try this by region and look at populations under water boil notices by region:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+   region appearances
+   &lt;chr&gt;        &lt;int&gt;
+ 1 4               16
+ 2 5               11
+ 3 10              10
+ 4 9                9
+ 5 12               7
+ 6 13               7
+ 7 14               2
+ 8 2                2
+ 9 7                2
+10 16               1
+11 3                1
+12 6                1</code></pre>
+</div>
+</div>
+<p>Data Takeaways: (Once I know what regions this is…) Harris should be 12.</p>
+<p>Now let’s look at the total ongoing water boil notices in Texas at the time this data was collected.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  appearances
+        &lt;int&gt;
+1          69</code></pre>
+</div>
+</div>
+<p>Data Takeaways: In the state of Texas, there were at least 69 total ongoing water boil notices (in all counties and regions) at the time that this data was collected.</p>
+<p>Now let’s look at the total population in Texas under ongoing water boil notices:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">texas_population_notice =</span> <span class="fu">sum</span>(population)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  texas_population_notice
+                    &lt;dbl&gt;
+1                   56074</code></pre>
+</div>
+</div>
+</section>
+<section id="what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems">What are the most common reasons for water boil notices? Are these statewide or localized problems?</h2>
+<p>Let’s look at the main reasons why water notices happen in the state of Texas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(reason_activity) <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  reason_activity                              appearances
+  &lt;chr&gt;                                              &lt;int&gt;
+1 BWN - LOW DISTRIBUTION PRESSURE                     4391
+2 BWN - WATER OUTAGE                                  1909
+3 BWN - LOW DISINFECTANT RESIDUAL DISTRIBUTION         189
+4 BWN - OTHER                                           72
+5 BWN - MICROBIOLOGICAL ECOLI                           57
+6 BWN - TURBIDITY                                       37</code></pre>
+</div>
+</div>
+<p>Now let’s check to see if more of these issues are systemwide or more localized problems.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(affected_area_activity) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  affected_area_activity         appearances
+  &lt;chr&gt;                                &lt;int&gt;
+1 BWN AFFECTED AREA - SYSTEMWIDE        3636
+2 BWN AFFECTED AREA - LOCALIZED         3019</code></pre>
+</div>
+</div>
+<p>BWN stands for boil water notice.</p>
+<p>Data Takeaways: Water boil notices are more related to systemwide issues, rather than localized. But, not by that much of a difference.</p>
+<p>** need TCEQ response to contextualize more of this info***</p>
+</section>
+<section id="how-many-people-in-texas-are-affected-by-water-boil-notices-each-year" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-people-in-texas-are-affected-by-water-boil-notices-each-year">How many people in Texas are affected by water boil notices each year?</h2>
+<p>Not including the ongoing ones and separating by year.</p>
 
 
 </section>

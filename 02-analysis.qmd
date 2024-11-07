@@ -59,11 +59,13 @@ Data Takeaways: East Texas or the area near Houston is the area in Texas with th
 
 More information here: https://www.texastribune.org/2022/12/07/boil-water-notices-rural-texas/
 
+
+
 ## What counties and/or regions have the longest lasting water boil notices? 
 
 I want to look at the counties with the longest lasting notice lengths, so let's look at the average to determine the county with the longest lasting notices. Then, I also want to record the minimum and maximum amount of days that water boil notices last in each county. 
 
-Counties (last 2 ***): 
+Counties (last 2 *** ERROS?!): 
 ```{r}
 water_boil |>
   group_by(county) |>
@@ -174,7 +176,7 @@ water_boil |>
   summarise(harris_population_notice = sum(population))
 ```
 
-In Harris county at the time that this data was collected at least 13,594 people were affected by water boil notices. 
+Data Takeaways: In Harris county at the time that this data was collected at least 13,594 people were affected by water boil notices. 
 
 Let's look at the total population affected by water boil notices in each county: 
 
@@ -188,12 +190,68 @@ water_boil |>
 
 Let's try this by region and look at populations under water boil notices by region: 
 
+```{r}
+water_boil |>
+  filter(if_any(c(rescinded, notice_length), is.na)) |> 
+  group_by(region) |>
+ summarize(appearances = n()) |> 
+ arrange(desc(appearances))
+```
+
+Data Takeaways: (Once I know what regions this is...) Harris should be 12. 
+
+Now let's look at the total ongoing water boil notices in Texas at the time this data was collected. 
+
+```{r}
+water_boil |>
+  filter(if_any(c(rescinded, notice_length), is.na)) |> 
+  summarize(appearances = n()) 
+```
+
+Data Takeaways: In the state of Texas, there were at least 69 total ongoing water boil notices (in all counties and regions) at the time that this data was collected. 
+
 Now let's look at the total population in Texas under ongoing water boil notices: 
 
 ```{r}
 water_boil |>
   filter(if_any(c(rescinded, notice_length), is.na)) |> 
   summarise(texas_population_notice = sum(population)) 
+```
+
+## What are the most common reasons for water boil notices? Are these statewide or localized problems? 
+
+Let's look at the main reasons why water notices happen in the state of Texas. 
+
+```{r}
+water_boil |>
+  group_by(reason_activity) |>
+  summarize(appearances = n()) |> 
+  arrange(desc(appearances))
+```
+
+Now let's check to see if more of these issues are systemwide or more localized problems. 
+
+```{r}
+water_boil |>
+  group_by(affected_area_activity) |>
+  summarize(appearances = n()) |> 
+  arrange(desc(appearances))
+```
+
+BWN stands for boil water notice. 
+
+Data Takeaways: Water boil notices are more related to systemwide issues, rather than localized. But, not by that much of a difference.  
+
+** need TCEQ response to contextualize more of this info*** 
+
+## How many people in Texas are affected by water boil notices each year? 
+
+Without including the ongoing water boil notices that we already looked at, lets look at the total population under  and separating by year. 
+
+
+```{r}
+water_boil |>
+  summarize(population_notice = sum(population))
 ```
 
 
