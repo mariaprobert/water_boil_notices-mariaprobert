@@ -8,5 +8,15 @@ This project aims to look at what water boil notices look like in Texas. What co
 
 The angle of this project focuses more on the local level, in an attempt to highlight communities impacted by water boil notices. The data I used for this project is from the Texas COmmission on Environmental Quality or TCEQ, and I obtained it from a public request. Keaton Peters also helped guide me when looking at this data. 
 
+Here are some of the things that I'm not exactly sure what they mean, but I'm waiting on more information: 
+
+- What do the numbered regions stand for? Or how can I find a map of these regions? 
+- This dataset doesn’t include a status column. Is that because these water boil notices have all been rescinded? 
+- Then what is the difference between the “reason” and the “reason-activity” columns? 
+- Similarly, what is the difference between “affected-area-activity” and “affected-activity”? 
+- Are the responsible parties the main overlookers of the pws? 
+- And finally, what does “reissued-count” and “do-not-consume” columns mean?
+ 
+
 This is a Quarto website.
 

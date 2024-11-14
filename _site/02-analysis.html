@@ -597,7 +597,17 @@ Caused by warning in `min()`:
 </section>
 <section id="how-many-people-in-texas-are-affected-by-water-boil-notices-each-year" class="level2">
 <h2 class="anchored" data-anchor-id="how-many-people-in-texas-are-affected-by-water-boil-notices-each-year">How many people in Texas are affected by water boil notices each year?</h2>
-<p>Not including the ongoing ones and separating by year.</p>
+<p>Without including the ongoing water boil notices that we already looked at, lets look at the total population under and separating by year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">population_notice =</span> <span class="fu">sum</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  population_notice
+              &lt;dbl&gt;
+1          57049113</code></pre>
+</div>
+</div>
 
 
 </section>
