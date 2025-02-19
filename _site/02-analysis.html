@@ -153,6 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-do-ongoing-water-boil-notices-look-like" id="toc-what-do-ongoing-water-boil-notices-look-like" class="nav-link" data-scroll-target="#what-do-ongoing-water-boil-notices-look-like">What do ongoing water boil notices look like?</a></li>
   <li><a href="#what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems" id="toc-what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems" class="nav-link" data-scroll-target="#what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems">What are the most common reasons for water boil notices? Are these statewide or localized problems?</a></li>
   <li><a href="#how-many-people-in-texas-are-affected-by-water-boil-notices-each-year" id="toc-how-many-people-in-texas-are-affected-by-water-boil-notices-each-year" class="nav-link" data-scroll-target="#how-many-people-in-texas-are-affected-by-water-boil-notices-each-year">How many people in Texas are affected by water boil notices each year?</a></li>
+  <li><a href="#adding-texas" id="toc-adding-texas" class="nav-link" data-scroll-target="#adding-texas">Adding Texas</a></li>
   </ul>
 </nav>
     </div>
@@ -228,33 +229,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="what-counties-andor-regions-have-the-most-amount-of-water-boil-notices">What counties and/or regions have the most amount of water boil notices?</h2>
 <p>Counties:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>water_boil_county <span class="ot">&lt;-</span> water_boil <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#arrange(desc(appearances)) |&gt; </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">state =</span> <span class="st">"TEXAS"</span>) </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>water_boil_county</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 223 × 2
-   county     appearances
-   &lt;chr&gt;            &lt;int&gt;
- 1 HARRIS             725
- 2 MONTGOMERY         357
- 3 BELL               309
- 4 BRAZORIA           258
- 5 HOUSTON            246
- 6 TRAVIS             232
- 7 POLK               164
- 8 LIBERTY            131
- 9 HARRISON           129
-10 CHEROKEE           116
+<pre><code># A tibble: 223 × 3
+   county   appearances state
+   &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;
+ 1 ANDERSON          76 TEXAS
+ 2 ANDREWS            4 TEXAS
+ 3 ANGELINA          37 TEXAS
+ 4 ARANSAS            8 TEXAS
+ 5 ARCHER             1 TEXAS
+ 6 ATASCOSA           3 TEXAS
+ 7 AUSTIN            14 TEXAS
+ 8 BANDERA           46 TEXAS
+ 9 BASTROP           19 TEXAS
+10 BAYLOR             1 TEXAS
 # ℹ 213 more rows</code></pre>
 </div>
 </div>
+<p>Download into CSV file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(water_boil_county, <span class="st">"/Users/MariaProbert/rwd/water_boil_county.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Regions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 2
    region appearances
@@ -286,14 +295,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I want to look at the counties with the longest lasting notice lengths, so let’s look at the average to determine the county with the longest lasting notices. Then, I also want to record the minimum and maximum amount of days that water boil notices last in each county.</p>
 <p>Counties (last 2 *** ERROS?!):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>water_length <span class="ot">&lt;-</span> water_boil <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">state =</span> <span class="st">"TEXAS"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: There were 4 warnings in `summarize()`.
 The first warning was:
@@ -303,31 +313,36 @@ Caused by warning in `min()`:
 ! no non-missing arguments to min; returning Inf
 ℹ Run `dplyr::last_dplyr_warnings()` to see the 3 remaining warnings.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>water_length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 223 × 4
-   county        average_notice_length min_notice_length max_notice_length
-   &lt;chr&gt;         &lt;drtn&gt;                &lt;drtn&gt;            &lt;drtn&gt;           
- 1 LIVE OAK      219.00000 days         3 days           366 days         
- 2 DUVAL         170.00000 days         5 days           335 days         
- 3 TITUS         125.00000 days         2 days           370 days         
- 4 WOOD          114.57143 days         1 days           759 days         
- 5 KENT           60.60000 days         3 days           271 days         
- 6 GREGG          49.68182 days         1 days           493 days         
- 7 COLLINGSWORTH  48.20000 days         2 days           223 days         
- 8 DICKENS        48.00000 days         1 days           182 days         
- 9 BRAZOS         40.77778 days         1 days           234 days         
-10 PRESIDIO       38.00000 days        38 days            38 days         
+<pre><code># A tibble: 223 × 5
+   county        average_notice_length min_notice_length max_notice_length state
+   &lt;chr&gt;         &lt;drtn&gt;                &lt;drtn&gt;            &lt;drtn&gt;            &lt;chr&gt;
+ 1 LIVE OAK      219.00000 days         3 days           366 days          TEXAS
+ 2 DUVAL         170.00000 days         5 days           335 days          TEXAS
+ 3 TITUS         125.00000 days         2 days           370 days          TEXAS
+ 4 WOOD          114.57143 days         1 days           759 days          TEXAS
+ 5 KENT           60.60000 days         3 days           271 days          TEXAS
+ 6 GREGG          49.68182 days         1 days           493 days          TEXAS
+ 7 COLLINGSWORTH  48.20000 days         2 days           223 days          TEXAS
+ 8 DICKENS        48.00000 days         1 days           182 days          TEXAS
+ 9 BRAZOS         40.77778 days         1 days           234 days          TEXAS
+10 PRESIDIO       38.00000 days        38 days            38 days          TEXAS
 # ℹ 213 more rows</code></pre>
 </div>
+</div>
+<p>Download into CSV file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(water_length, <span class="st">"/Users/MariaProbert/rwd/water_length.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>None of the top three counties with longest lasting water boil notices show up in the top of the list of most water boil notices. But this makes sense. East Austin has a higher population, therefore a higher demand for water and therefore a higher demand for water boil notices to get resolved.</p>
 <p>Let’s look at Live Oak more closely:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  county <span class="sc">==</span> <span class="st">"LIVE OAK"</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, population, issued, rescinded, notice_length, reason_activity, reason, affected_area_activity, affected_area, pws_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  county <span class="sc">==</span> <span class="st">"LIVE OAK"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, population, issued, rescinded, notice_length, reason_activity, reason, affected_area_activity, affected_area, pws_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 10
   county   population issued              rescinded           notice_length
@@ -343,17 +358,17 @@ Caused by warning in `min()`:
 <p>Now, I want to look at the top three counties with the most water boil notices and check how long their water boil notices last.</p>
 <p>Let’s look at Harris as an example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) <span class="sc">|&gt;</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"HARRIS"</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) <span class="sc">|&gt;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"HARRIS"</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: There were 4 warnings in `summarize()`.
 The first warning was:
@@ -380,14 +395,14 @@ Caused by warning in `min()`:
 <p>Regions:</p>
 <p>Now let’s check regions with the longest lasting water boil notices:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_notice_length =</span> <span class="fu">mean</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_notice_length =</span> <span class="fu">min</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_notice_length =</span> <span class="fu">max</span>(notice_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_notice_length)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 4
    region average_notice_length min_notice_length max_notice_length
@@ -423,11 +438,11 @@ Caused by warning in `min()`:
 <p>The original results for the duration of the water boil notices gave us a lot of NA results, which point to water boil notices that are ongoing at the time the data was collected.</p>
 <p>Let’s look at the amount of ongoing water boil notices in each county in the time span of Jan.&nbsp;2022 to the start of 2024.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 42 × 2
    county    appearances
@@ -447,10 +462,10 @@ Caused by warning in `min()`:
 </div>
 <p>Let’s look at the water boil notices in Harris:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"HARRIS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"HARRIS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 17
 # Groups:   county [1]
@@ -468,11 +483,11 @@ Caused by warning in `min()`:
 </div>
 <p>Let’s add up the population affected by ongoing water notices in Harris county:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"HARRIS"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">harris_population_notice =</span> <span class="fu">sum</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"HARRIS"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">harris_population_notice =</span> <span class="fu">sum</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   county harris_population_notice
@@ -483,11 +498,13 @@ Caused by warning in `min()`:
 <p>Data Takeaways: In Harris county at the time that this data was collected at least 13,594 people were affected by water boil notices.</p>
 <p>Let’s look at the total population affected by water boil notices in each county:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">county_population_notice =</span> <span class="fu">sum</span>(population)) <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(county_population_notice))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>population_ongoing_notice <span class="ot">&lt;-</span> water_boil <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">county_population_notice =</span> <span class="fu">sum</span>(population)) <span class="sc">|&gt;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(county_population_notice))</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>population_ongoing_notice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 42 × 2
    county   county_population_notice
@@ -507,11 +524,11 @@ Caused by warning in `min()`:
 </div>
 <p>Let’s try this by region and look at populations under water boil notices by region:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 2
    region appearances
@@ -533,9 +550,9 @@ Caused by warning in `min()`:
 <p>Data Takeaways: (Once I know what regions this is…) Harris should be 12.</p>
 <p>Now let’s look at the total ongoing water boil notices in Texas at the time this data was collected.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   appearances
@@ -546,9 +563,9 @@ Caused by warning in `min()`:
 <p>Data Takeaways: In the state of Texas, there were at least 69 total ongoing water boil notices (in all counties and regions) at the time that this data was collected.</p>
 <p>Now let’s look at the total population in Texas under ongoing water boil notices:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">texas_population_notice =</span> <span class="fu">sum</span>(population)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">c</span>(rescinded, notice_length), is.na)) <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">texas_population_notice =</span> <span class="fu">sum</span>(population)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   texas_population_notice
@@ -561,10 +578,10 @@ Caused by warning in `min()`:
 <h2 class="anchored" data-anchor-id="what-are-the-most-common-reasons-for-water-boil-notices-are-these-statewide-or-localized-problems">What are the most common reasons for water boil notices? Are these statewide or localized problems?</h2>
 <p>Let’s look at the main reasons why water notices happen in the state of Texas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(reason_activity) <span class="sc">|&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(reason_activity) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   reason_activity                              appearances
@@ -579,10 +596,10 @@ Caused by warning in `min()`:
 </div>
 <p>Now let’s check to see if more of these issues are systemwide or more localized problems.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(affected_area_activity) <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(affected_area_activity) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">appearances =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(appearances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   affected_area_activity         appearances
@@ -599,8 +616,8 @@ Caused by warning in `min()`:
 <h2 class="anchored" data-anchor-id="how-many-people-in-texas-are-affected-by-water-boil-notices-each-year">How many people in Texas are affected by water boil notices each year?</h2>
 <p>Without including the ongoing water boil notices that we already looked at, lets look at the total population under and separating by year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">population_notice =</span> <span class="fu">sum</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">population_notice =</span> <span class="fu">sum</span>(population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   population_notice
@@ -608,6 +625,34 @@ Caused by warning in `min()`:
 1          57049113</code></pre>
 </div>
 </div>
+</section>
+<section id="adding-texas" class="level2">
+<h2 class="anchored" data-anchor-id="adding-texas">Adding Texas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>water_boil <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">state =</span> <span class="st">"TEXAS"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6,655 × 18
+   issued              rescinded           notice_length pws_id    pws_name     
+   &lt;dttm&gt;              &lt;dttm&gt;              &lt;drtn&gt;        &lt;chr&gt;     &lt;chr&gt;        
+ 1 2023-12-31 00:00:00 2024-01-01 00:00:00  1 days       TX1460136 DAYTON OAKS …
+ 2 2023-12-31 00:00:00 2024-01-04 00:00:00  4 days       TX1830025 DEADWOOD WSC 
+ 3 2023-12-30 00:00:00 2024-01-02 00:00:00  3 days       TX0140006 CITY OF KILL…
+ 4 2023-12-30 00:00:00 2024-01-03 00:00:00  4 days       TX0960001 RRA ESTELLIN…
+ 5 2023-12-30 00:00:00 2024-01-01 00:00:00  2 days       TX1012133 HARRIS COUNT…
+ 6 2023-12-30 00:00:00 2024-01-03 00:00:00  4 days       TX1020081 GUM SPRINGS …
+ 7 2023-12-29 00:00:00 2024-01-06 00:00:00  8 days       TX0040003 COPANO COVE …
+ 8 2023-12-29 00:00:00 2024-01-03 00:00:00  5 days       TX1600001 CITY OF MASON
+ 9 2023-12-29 00:00:00 2024-01-10 00:00:00 12 days       TX1740005 APPLEBY WSC  
+10 2023-12-29 00:00:00 2024-01-04 00:00:00  6 days       TX1740010 D &amp; M WSC    
+# ℹ 6,645 more rows
+# ℹ 13 more variables: population &lt;dbl&gt;, pws_type &lt;chr&gt;, reason_activity &lt;chr&gt;,
+#   reason &lt;chr&gt;, affected_area_activity &lt;chr&gt;, affected_area &lt;chr&gt;,
+#   responsible_party &lt;chr&gt;, comments &lt;chr&gt;, region &lt;chr&gt;, county &lt;chr&gt;,
+#   reissued_count &lt;dbl&gt;, nature &lt;chr&gt;, state &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p><img src="_site/images/Where are water boil notices located in Texas_.png" class="img-fluid"></p>
 
 
 </section>

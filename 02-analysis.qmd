@@ -23,6 +23,8 @@ Questions for analysis:
 library(tidyverse)
 library(janitor)
 library(readxl)
+library(tigris)
+library(sf)
 ```
 
 
@@ -34,16 +36,61 @@ water_boil <- read_rds("data-processed/01-water_boil.rds")
 water_boil 
 ```
 
+##Creating a graph
+
+```{r}
+counties <- counties(cb = TRUE, class = "sf")
+```
+
+```{r}
+graph_counties <- water_boil |>
+group_by(county) |>
+  summarize(total_notices = n()) |>
+  mutate(county = str_to_title(county))
+
+graph_counties
+```
+
+```{r}
+water_boil_graph <- counties |>
+  left_join(graph_counties, by= c("NAME"= "county")) |>
+  filter(STATE_NAME == "Texas")
+```
+
+
+```{r}
+ggplot(water_boil_graph) + 
+  geom_sf(
+    aes(fill = total_notices), color = "white", size = 0.2
+  ) + 
+  scale_fill_gradient(low = "#335EF0",high = "#FF0000")
+```
+
+
+- ggplotly 
+- how to add interactivity to ggplot 
+
 
 ## What counties and/or regions have the most amount of water boil notices?
 
 Counties: 
 ```{r}
-water_boil |>
+water_boil_county <- water_boil |>
   group_by(county) |>
   summarize(appearances = n()) |> 
-  arrange(desc(appearances))
+  #arrange(desc(appearances)) |> 
+  mutate( state = "TEXAS") 
+
+
+water_boil_county
 ```
+
+Download into CSV file: 
+
+```{r}
+write_csv(water_boil_county, "/Users/MariaProbert/rwd/water_boil_county.csv")
+```
+
 
 Regions: 
 ```{r}
@@ -67,15 +114,28 @@ I want to look at the counties with the longest lasting notice lengths, so let's
 
 Counties (last 2 *** ERROS?!): 
 ```{r}
-water_boil |>
+water_length <- water_boil |>
   group_by(county) |>
   summarize(
     average_notice_length = mean(notice_length, na.rm = TRUE),
     min_notice_length = min(notice_length, na.rm = TRUE), 
     max_notice_length = max(notice_length, na.rm = TRUE)
     ) |>
-  arrange(desc(average_notice_length)) 
+  arrange(desc(average_notice_length)) |>
+  mutate( state = "TEXAS") 
+
+
+water_length
 ```
+
+Download into CSV file: 
+
+```{r}
+write_csv(water_length, "/Users/MariaProbert/rwd/water_length.csv")
+```
+
+
+
 
 None of the top three counties with longest lasting water boil notices show up in the top of the list of most water boil notices. But this makes sense. East Austin has a higher population, therefore a higher demand for water and therefore a higher demand for water boil notices to get resolved. 
 
@@ -181,12 +241,17 @@ Data Takeaways: In Harris county at the time that this data was collected at lea
 Let's look at the total population affected by water boil notices in each county: 
 
 ```{r}
-water_boil |>
+population_ongoing_notice <- water_boil |>
   filter(if_any(c(rescinded, notice_length), is.na)) |> 
   group_by(county) |>
   summarise(county_population_notice = sum(population)) |>
   arrange(desc(county_population_notice))
+
+population_ongoing_notice
 ```
+
+
+
 
 Let's try this by region and look at populations under water boil notices by region: 
 
@@ -253,5 +318,20 @@ Without including the ongoing water boil notices that we already looked at, lets
 water_boil |>
   summarize(population_notice = sum(population))
 ```
+
+## Adding Texas 
+
+```{r}
+water_boil |> 
+  mutate( state = "TEXAS") 
+  
+```
+
+
+
+![](_site/images/Where are water boil notices located in Texas_.png)
+
+
+
 
 
