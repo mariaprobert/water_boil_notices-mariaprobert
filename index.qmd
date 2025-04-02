@@ -6,7 +6,7 @@ This project was made for the UT Media Group Data Fellowship.
 
 This project aims to look at what water boil notices look like in Texas. What counties or cities are affected? Why were the water boil notices issues? What caused these water boil notices? Are some of the questions I'm hoping to answer. 
 
-The angle of this project focuses more on the local level, in an attempt to highlight communities impacted by water boil notices. The data I used for this project is from the Texas COmmission on Environmental Quality or TCEQ, and I obtained it from a public request. Keaton Peters also helped guide me when looking at this data. 
+The angle of this project focuses more on the local level, in an attempt to highlight communities impacted by water boil notices. The data I used for this project is from the Texas Commission on Environmental Quality or TCEQ, and I obtained it from a public request. Keaton Peters also helped guide me when looking at this data. 
 
 Here are some of the things that I'm not exactly sure what they mean, but I'm waiting on more information: 
 
@@ -17,6 +17,11 @@ Here are some of the things that I'm not exactly sure what they mean, but I'm wa
 - Are the responsible parties the main overlookers of the pws? 
 - And finally, what does “reissued-count” and “do-not-consume” columns mean?
  
+Findings: ***
+
+Link to a headline on index [Map Here](02-analysis.qmd#water-boil-notices-interactive-map)
+
+
 
 This is a Quarto website.
 
