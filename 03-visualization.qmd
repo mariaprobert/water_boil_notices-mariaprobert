@@ -2,11 +2,3 @@
 title: "Visualization"
 ---
 
-https://gis-txdot.opendata.arcgis.com/datasets/TXDOT::texas-county-boundaries-detailed/about 
-
-
-KML file in a new file 
-
-or GEOJson 
-
-

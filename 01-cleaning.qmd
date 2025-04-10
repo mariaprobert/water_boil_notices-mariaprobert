@@ -32,11 +32,11 @@ Here I will download the TCEQ data that I obtained from a public records request
 
 More information about the data can be found on the index page of this notebook. 
 
-Downloaded the file straight into my computer rather than downloading it into this notebook because its in Excel formatting. I dowloaded the data into my data-raw folder. 
+I downloaded the file straight into my computer rather than downloading it into this notebook because its in Excel formatting. I downloaded the data into my data-raw folder. 
 
 ## Importing the Data 
 
-Here I am reading the data into my notebook that I already have downloaded to my "data-raw" folder. Then, we're adding our data to a code chunk. For simplicity it will be called "water_boil" which we will then peak at in order to look at what our data looks like in order to clean. We add the clean_names() function so tht we can see our data columns in a clean way. 
+Here I am reading the data into my notebook that I already have downloaded to my "data-raw" folder. Then, we're adding our data to a code chunk. For simplicity it will be called "water_boil" which we will then take a peak at in order to look at what our data looks like in order to clean. We add the clean_names() function so that we can see our data columns in a clean way. 
 
 ```{r}
 water_boil <- read_excel("data-raw/water_boil_2018_2022.xlsx") |> clean_names()
@@ -51,16 +51,17 @@ water_boil |> glimpse()
 ```
 
 Notes for water boil notice cleaning: 
-- According to TCEQ, an RN Name is a, A “Regulated Entity” is a person, organization, place, or thing that is of environmental interest to TCEQ where regulatory activities of interest to the Agency occur or have occurred in the past. Examples are a site, facility or license." Each RN is given an 11 digit, which is recorded in the column "RN#" More information on RNs can be found here: https://www.tceq.texas.gov/downloads/remediation/iop/core-data-form-instructions-10400.pdf 
+
+- According to TCEQ, an RN Name is a “Regulated Entity” which is a person, organization, place, or thing that is of environmental interest to TCEQ. Where regulatory activities of interest to the agency occur or have occurred in the past. Examples are a site, facility or license." Each RN is given an 11 digit number, which is recorded in the column "RN#" More information on RNs can be found ["here"](https://www.tceq.texas.gov/downloads/remediation/iop/core-data-form-instructions-10400.pdf).
 - We have to change both end and start data to a date column instead of chr or dttm
 - We have to clean names of columns and data 
 - The formatting of the "Jurisdiction" column is a bit weird, why do some entities include this information and others exclude this information? What constitutes a jurisdiction?  
 
 ## Fixing the dates 
 
-We want to make sure that our dates are in month, date, year format for consistency in our analysis. We also want to make sure that our notebook recognizes that information as dates. 
+We want to make sure that our dates are in month, date and year format for consistency in our analysis. We also want to make sure that our notebook recognizes that information as dates. 
 
-Our end date was having issues parsing, so we made sure that the date did not exist or was "NA," after we filtered it out we can see that maybe these dates are on going and that's why they were formatted differently from "start_date."
+Our end date was having issues parsing, so we made sure to filter out the dates that did not exist or were "NA." After we filtered them out we can see that these dates represent on going (or active) water boil notices, and that's why they were formatted differently from "start_date."
 
 ```{r}
 water_boil_dates <- water_boil |>
@@ -74,6 +75,8 @@ water_boil_dates
 ## Importing Updated Data  
 
 I uploaded the new data that encompasses all water boil notices from January 2022 to December of 2023 into my data-raw folder. This data also encompasses a few boil notices from 2024. 
+
+Note: This data should be updated with newer 2024 and 2025 water boil notice data. 
 
 ```{r}
 water_boil_new <- read_excel("data-raw/BWN_water_boil_new .xlsx") |> clean_names() 
@@ -102,7 +105,7 @@ water_boil_new_names |> glimpse()
 
 ## Clean dates 
 
-It looks like our "start_date" column is facing the same excel date issue. We also have to change the end_date column so that is appears as a date variable. 
+It looks like our "start_date" column is facing the same excel date issue. We also have to change the end_date column so that it appears as a date variable. 
 
 ```{r}
 water_boil_dates_new <- water_boil_new_names |>
@@ -116,6 +119,7 @@ water_boil_dates_new
 ```
 
 ## Counting length of water boil notices 
+
 For my analysis I would like to look at the length of water boil notices and the counties where they are happening. In order to do this later I want to create a new column for the length of the water boil notices. 
 
 ```{r}
@@ -130,7 +134,7 @@ water_boil_length
 
 ## Remove unnecessary column 
 
-I checked in the original dataset if there was any row of data in the "do_not_consume_use" column and they were all N/A. We will remove this unnecessary column with the filter option. I also want to remove the "end_date" and "start_date" column that are still in character format because I already created the new date column.  
+I checked the original dataset to see if there were any rows of data in the "do_not_consume_use" column and they were all N/A. We will remove this unnecessary column with the filter option. I also want to remove the "end_date" and "start_date" column that are still in character format because I already created the new date column.  
 
 ```{r}
 water_boil_filter <- water_boil_length |> 
