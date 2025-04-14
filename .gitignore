@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,windows,r
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,windows,r
 
+data-raw/tl_2024_us_county/
+
+
 ### macOS ###
 # General
 .DS_Store
