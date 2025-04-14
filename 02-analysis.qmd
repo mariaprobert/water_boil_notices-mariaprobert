@@ -46,7 +46,13 @@ water_boil
 Because most of my data is by county, I want to look at where water boil notices are located and what they look like. In order to visualize this, I will use shake files for all Texas counties. 
 
 ```{r}
-counties <- counties(cb = TRUE, class = "sf")
+##counties <- counties(cb = TRUE, class = "sf")
+
+counties <- st_read("data-raw/tl_2024_us_county/tl_2024_us_county.shp") |>
+  filter(STATEFP == "48") |>
+  mutate(COUNTY = str_to_upper(NAME))
+
+glimpse(counties)
 
 ```
 
@@ -88,9 +94,14 @@ graph_counties
 Here I am using the shakefile to prepare the mapview() visualization. 
 
 ```{r}
+glimpse(counties)
+```
+
+
+```{r}
 water_boil_graph <- counties |>
-  left_join(graph_counties, by= c("NAME"= "county")) |>
-  filter(STATE_NAME == "Texas")
+  left_join(graph_counties, by= c("NAME"= "county")) ##|>
+ # filter(STATE_NAME == "Texas")
 ```
 
 
@@ -120,6 +131,8 @@ Using the shakefile and the water boil graph, I added these to the mapview() fun
 I used the mapview() package to make an interactive map. To look at the county name, just hover on the county and click for extra information. 
 
 ```{r}
+#| warning: false
+
 mapview(water_boil_graph, zcol = "total_notices", col.regions= c("orange","#e67e22","#e74c3c", "#FF0000", "#7b241c", "#641e16"))
 ```
 
@@ -167,8 +180,8 @@ water_length <- water_boil |>
 water_length 
   
  water_length_shape <- counties |>
-  left_join(water_length, by= c("NAME"= "county")) |>
-  filter(STATE_NAME == "Texas")
+  left_join(water_length, by= c("NAME"= "county")) ##|>
+  ##filter(STATE_NAME == "Texas")
 ```
 
 Download into CSV file: 

@@ -1,21 +1,22 @@
 project:
   type: website
+  output-dir: docs
+  render:
+  - "01*.qmd"
+  - "*.qmd"
 
 website:
-  title: "water_boil_notices-mariaprobert"
-  navbar:
-    left:
+  title: "Texas Water Boil Notices"
+  sidebar:
+    contents:
       - href: index.qmd
         text: Home
-      - 01-cleaning.qmd
-      - 02-analysis.qmd
-      
+      - auto: "*.qmd"
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-
-
-
+    df-print: paged
+    code-overflow: wrap
