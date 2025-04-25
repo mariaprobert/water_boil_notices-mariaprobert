@@ -36,6 +36,8 @@ library(mapview)
 Here I'm importing all of my clean data from my cleaning notebook. 
 
 ```{r}
+#| warning: false
+
 water_boil <- read_rds("data-processed/01-water_boil.rds")
 
 water_boil 
@@ -104,26 +106,6 @@ water_boil_graph <- counties |>
  # filter(STATE_NAME == "Texas")
 ```
 
-
-```{r}
-ggplot(water_boil_graph) + 
-  geom_sf(
-    aes(fill = total_notices), color = "white", size = 0.2
-  ) + 
-  scale_fill_gradient(low = "#335EF0",high = "#FF0000")+ 
-  theme_void() + 
-  labs(
-    title = "Where are water boil notices located in Texas?", 
-    subtitle = str_wrap("This chart looks at the concentration of water boil notices per county. Harris county has the most amount of water boil notices in the state."), 
-    caption = "Source = Texas Commission on Environmental Quality", 
-    fill = "Total Notices"
-    ) 
-```
-
-- save as image and call into summary ggsave --> object first then ggsave 
-![](_site/images/Where are water boil notices located in Texas_.png) 
-
-
 ### Water Boil Notices Interactive Map
 
 Using the shakefile and the water boil graph, I added these to the mapview() function and used a similar color scheme to show differences in water boil concentrations. 
@@ -138,7 +120,7 @@ mapview(water_boil_graph, zcol = "total_notices", col.regions= c("orange","#e67e
 
 The county with the most amount of water boil notices is Harris county (Houston area), Montgomery (area above Houston), Bell (which makes up Temple, Killeen, etc.), and  Brazoria county (South of Houston).  
 
-Data Takeaways: 
+**Data Takeaways**: 
 
 - East Texas or the surrounding Houston area is the area in Texas with the most amount of water boil notices. Harris county is one of the most populous counties in Texas. 
 
@@ -154,7 +136,7 @@ water_boil |>
   arrange(desc(appearances))
 ```
 
-Data Takeaway: 
+**Data Takeaway**: 
 
 - Region 12 has the most amount of water boil notices at 1,716. Region 12 covers Houston. Again, Houston area is the region with the most amount of water boil notices. 
 
@@ -174,7 +156,8 @@ water_length <- water_boil |>
   mutate( state = "TEXAS",   county = str_to_title(county))  |>
   mutate(average_days = as.numeric(average_notice_length)) |>
   mutate(max_days = as.numeric(max_notice_length)) |>
-  mutate(min_days = as.numeric(min_notice_length))
+  mutate(min_days = as.numeric(min_notice_length)) |>
+  filter(min_days != "Inf")
 
 
 water_length 
@@ -184,24 +167,15 @@ water_length
   ##filter(STATE_NAME == "Texas")
 ```
 
-Download into CSV file: 
-
-```{r}
-write_csv(water_length, "/Users/MariaProbert/rwd/water_length.csv")
-```
+#Average Water Boil Notice Length 
 
 Let's look at the longest average water boil notice durations and the maximum and minimum water boil notice lengths per county. I used the same format as above and made sure to include the data and join it to the shapefile. I chose a different color scheme to differentiate the data. 
 
 ```{r}
-mapview(water_length_shape, zcol= "average_days", col.regions= c("blue","#5a9ef5", "#83cbf6", "#5ae2f5")) 
+mapview(water_length_shape, zcol= "average_days", col.regions= c("#5ae2f5", "#83cbf6", "#5a9ef5", "blue", "#0c1355")) 
 ```
 
-
-#Average Water Boil Notice Lenght 
-
-![](_site/images/Average length.png)
-
-Data Takeaways: 
+**Data Takeaways**: 
 
 - None of the top three counties with the longest average amount of days per water boil notice show up in the top of the list of most water boil notices. But this makes sense. For example, places like East Austin have a higher population, therefore a higher demand for water and a higher demand for water boil notices to get resolved. 
 
@@ -241,7 +215,7 @@ When I check for Harris we get NA, which means that there is still at least one 
 
 To check the length of the water boil notices that have been rescinded, I added "na.rm = TRUE." This removes all ongoing water boil notices and gives us a comparable average. 
 
-Data Takeaways: 
+**Data Takeaways**: 
 
 - Counties with the longest lasting water boil notices tend to have smaller populations. The top two counties with the longest lasting notices are located South of San Antonio.
 - Harris county has at least one pending water boil notice at the time this data was collected. 
@@ -265,29 +239,39 @@ water_length_region
 
 If I don't remove the NA examples, 12 out of the 16 regions designated by TCEQ in Texas have at least one ongoing water boil notice at the time this data was collected.
 
-Data Takeaways: 
+**Data Takeaways**: 
 
 - Region 16 covers Laredo. The highest average water boil notice length is 29 days. 
 - 12 out of the 16 regions designated by TCEQ in Texas have at least one ongoing water boil notice at the time this data was collected. 
 
 ## Maximum length of water boil notices 
 
-![](_site/images/Maximum length.png)
-
 Now let's look at the maximum length of water boil notices in the state of Texas. We will use the same data from above and the mapview() function. 
 
 ```{r}
-mapview(water_length_shape, zcol= "average_days", col.regions= c("blue","#5a9ef5", "#83cbf6", "#5ae2f5")) 
+mapview(water_length_shape, zcol= "max_days", col.regions= c("#a3eab3","#65e382", "#3ae360", "#1bb83f","#014e12")) 
 ```
 
 
+**Data Takeaways**: 
+
+- The counties with the longest lasting water boil notices are more rural (Polk and Wood). This is different from the longest average results. Rural counties have smaller populations and lower demand for water boil notices to be resolved quickly. 
+
 ## Minimum length of water boil notices 
 
-![](_site/images/minimum length.png)
+```{r}
+mapview(water_length_shape, zcol= "min_days", col.regions= c("#eacef9","#c56ef3", "#7313a5", "#3d045b")) 
+
+```
+
+**Data Takeaways**: 
+
+- Here we can see that when it comes to the minimum number of days that it takes to resolve a water boil notice, rural counties like Presidio or counties near the border or Panhandle have longer wait times. 
+- There is also a pattern in heavily populated areas (like the Houston metro area) where water boil notices can be resolved in just one day. 
 
 ## What do ongoing water boil notices look like? 
 
-The original results for the duration of the water boil notices gave us a lot of NA results, each NA represents water boil notices that are ongoing at the time the data was collected.  
+The original results for the duration of the water boil notices gave us a lot of NA results. Each NA represents water boil notices that are ongoing at the time the data was collected.  
 
 Let's look at the amount of ongoing water boil notices in each county in the time span of Jan. 2022 to Jan.  2024. 
 
@@ -299,7 +283,9 @@ water_boil |>
  arrange(desc(appearances))
 ```
 
-Data Takeaways: The counties with the most ongoing water notices are Harris, Johnson and Wise. Again, Harris county has a very high amount of water boil notices. 
+**Data Takeaways**: 
+
+- The counties with the most ongoing water notices are Harris, Johnson and Wise. Again, Harris county has a very high amount of water boil notices. 
 
 Now let's look at the total ongoing water boil notices in Texas at the time this data was collected. 
 
@@ -309,7 +295,9 @@ water_boil |>
   summarize(appearances = n()) 
 ```
 
-Data Takeaways: In the state of Texas, there were at least 69 total ongoing water boil notices (in all counties and regions) at the time that this data was collected. 
+**Data Takeaways**: 
+
+- In the state of Texas, there were at least 69 total ongoing water boil notices (in all counties and regions) at the time that this data was collected. 
 
 ## Harris County water notices  
 
@@ -346,14 +334,22 @@ population_ongoing_notice <- water_boil |>
   filter(if_any(c(rescinded, notice_length), is.na)) |> 
   group_by(county) |>
   summarise(county_population_notice = sum(population)) |>
-  arrange(desc(county_population_notice))
+  arrange(desc(county_population_notice)) |>
+  mutate( state = "TEXAS",   county = str_to_title(county))
 
 population_ongoing_notice
+
+population_shape <- counties |>
+  left_join(population_ongoing_notice, by= c("NAME"= "county"))
+
+
 ```
 
-** MAP?  
+```{r}
+mapview(population_shape, zcol= "county_population_notice", col.regions= c("#febfbf","#fd6f6f", "#ff2e2e", "#780404")) 
+```
 
-Data Takeaways: 
+**Data Takeaways**: 
 
 - The counties with the most population affected by water boil notices matches up to counties with a high population density. For example, Harris and the Houston area as well as Smith county and Tyler. 
 
@@ -367,7 +363,9 @@ water_boil |>
  arrange(desc(appearances))
 ```
 
-Data Takeaways: Region 12 which covers Harris county surpasses all other counties in terms of population affected. 
+**Data Takeaways**: 
+
+-Region 12 which covers Harris county surpasses all other counties in terms of population affected. 
 
 Now let's look at the total population in Texas under ongoing water boil notices: 
 
@@ -399,9 +397,9 @@ water_boil |>
 
 Note: BWN stands for boil water notice. 
 
-Data Takeaways: 
+**Data Takeaways**: 
 
-- Water boil notices are more related to systemwide issues, rather than localized. But, not by that much of a difference.  
+- Water boil notices are more related to system wide issues, rather than localized. But, not by that much of a difference.  
 
 ## How many people in Texas are affected by water boil notices each year? 
 
@@ -416,6 +414,9 @@ water_boil |>
 
 ## Main Takeaways 
 
+**WATER BOIL NOTICES**: Water boil notices tend to be concentrated in areas with a high population density. For example, counties near the greater Houston area experience more water boil notices than counties in the Panhandle. Population also plays a big role when it comes to the average, minimum and maximum length of water boil notices. We notice a concentration of longer lasting average and minimum lengths in areas with less population density. Large urban areas have more water boil notices, yet they are more quickly resolved. 
+**TYPE OF NOTICES**: Notices are equally localized and systemwide. The more common issues relating to water boil notices in the state of Texas are due to system malfunctions such as distribution pressure or outages. There is no clear indication that 
+**ONGOING NOTICES AND AFFECTED POPULATION**: 
 
 
 
