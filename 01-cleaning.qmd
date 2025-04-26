@@ -52,7 +52,7 @@ water_boil |> glimpse()
 
 Notes for water boil notice cleaning: 
 
-- According to TCEQ, an RN Name is a “Regulated Entity” which is a person, organization, place, or thing that is of environmental interest to TCEQ. Where regulatory activities of interest to the agency occur or have occurred in the past. Examples are a site, facility or license." Each RN is given an 11 digit number, which is recorded in the column "RN#" More information on RNs can be found ["here"](https://www.tceq.texas.gov/downloads/remediation/iop/core-data-form-instructions-10400.pdf).
+- According to TCEQ, an RN Name is a “Regulated Entity” which is a person, organization, place, or thing that is of environmental interest to TCEQ. Where regulatory activities of interest to the agency occur or have occurred in the past. Examples are a site, facility or license. Each RN is given an 11 digit number, which is recorded in the column "RN#" More information on RNs can be found [here](https://www.tceq.texas.gov/downloads/remediation/iop/core-data-form-instructions-10400.pdf).
 - We have to change both end and start data to a date column instead of chr or dttm
 - We have to clean names of columns and data 
 - The formatting of the "Jurisdiction" column is a bit weird, why do some entities include this information and others exclude this information? What constitutes a jurisdiction?  
@@ -108,6 +108,8 @@ water_boil_new_names |> glimpse()
 It looks like our "start_date" column is facing the same excel date issue. We also have to change the end_date column so that it appears as a date variable. 
 
 ```{r}
+#| warning: false
+
 water_boil_dates_new <- water_boil_new_names |>
   mutate(
        start_date = mdy(issued), 

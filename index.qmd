@@ -2,22 +2,27 @@
 title: "Water Boil Notices in Texas- Maria Probert"
 ---
 
-###Project Overview:
+## Project Overview:
+
 Maria Probert is a UT Austin Journalism and Economics major. She is currently a Data Fellow at UT's Journalism Media Innovation Group. This group is a part of the Dallas Morning News Innovation Endowment. Maria has done work for UT's student media like the Daily Texan and has previously interned at the Texas Tribune and Texas Monthly. 
 
 This project aims to look at what water boil notices look like in Texas. What counties or cities are affected? Why were the water boil notices issues? What caused these water boil notices? 
 
-The angle of this project focuses more on the local level, in an attempt to highlight communities impacted by water boil notices. The data I used for this project is from the Texas Commission on Environmental Quality or TCEQ, and I obtained it from a public records request. Keaton Peters helped guide me when looking at this data. 
+The angle of this project focuses more on the local level, in an attempt to highlight communities impacted by water boil notices. The data I used for this project is from the Texas Commission on Environmental Quality or TCEQ and spans from 2013 to 2024. I obtained the most recent data from a public records request. Keaton Peters helped guide me when looking at this data. 
  
-###Shake Files:
-Map of water boil notices: 
-Link to a headline on index [Map Here](02-analysis.qmd#water-boil-notices-interactive-map)
+## Shake Files:
 
-Note on Shake Files: 
+The maps in this project were made using shake files. You can look at an example here: [Water Notice Map](02-analysis.qmd#water-boil-notices-interactive-map)
 
+**Note on Shake Files**: 
+Because we used the mapview() function for these interactive maps, and a recent update requires seperate download of the geo-coordinates, I had to download county data. To access the files I used to make these maps use this  [link](https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/). Viewers might have to download the files on their device separately to recreate. 
 
-https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/ 
+## Main Takeaways: 
 
-###Main Takeaways: 
+Here is what I learned in my data analysis: 
 
+**WATER BOIL NOTICES**: Water boil notices tend to be concentrated in areas with a high population density. For example, counties near the greater Houston area experience more water boil notices than counties in the Panhandle. Population also plays a big role when it comes to the average, minimum and maximum length of water boil notices. There is a concentration of longer lasting average and minimum lengths in areas with less population density. Large urban areas have more water boil notices, yet they are more quickly resolved. 
 
+**TYPE OF NOTICES**: Notices are equally localized and systemwide. The more common issues relating to water boil notices in the state of Texas are due to system malfunctions such as distribution pressure or outages. There is no clear indication that water toxicity is a direct issue when it comes to water boil notices. 
+
+**ACTIVE NOTICES AND AFFECTED POPULATION**: At the time this data was collected at least 56,074 people in the state of Texas were affected by water boil notices. In total, water boil notices affected more than 57 million people in the state of Texas in more than a decade. 

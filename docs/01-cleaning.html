@@ -264,7 +264,7 @@ $ nature       &lt;chr&gt; "WATER OUTAGE", "LOW DISTRIBUTION PRESSURE", "NATURAL
 </div>
 <p>Notes for water boil notice cleaning:</p>
 <ul>
-<li>According to TCEQ, an RN Name is a “Regulated Entity” which is a person, organization, place, or thing that is of environmental interest to TCEQ. Where regulatory activities of interest to the agency occur or have occurred in the past. Examples are a site, facility or license.” Each RN is given an 11 digit number, which is recorded in the column “RN#” More information on RNs can be found <a href="https://www.tceq.texas.gov/downloads/remediation/iop/core-data-form-instructions-10400.pdf">“here”</a>.</li>
+<li>According to TCEQ, an RN Name is a “Regulated Entity” which is a person, organization, place, or thing that is of environmental interest to TCEQ. Where regulatory activities of interest to the agency occur or have occurred in the past. Examples are a site, facility or license. Each RN is given an 11 digit number, which is recorded in the column “RN#” More information on RNs can be found <a href="https://www.tceq.texas.gov/downloads/remediation/iop/core-data-form-instructions-10400.pdf">here</a>.</li>
 <li>We have to change both end and start data to a date column instead of chr or dttm</li>
 <li>We have to clean names of columns and data</li>
 <li>The formatting of the “Jurisdiction” column is a bit weird, why do some entities include this information and others exclude this information? What constitutes a jurisdiction?</li>
@@ -387,16 +387,9 @@ $ nature                 &lt;chr&gt; "Due to MAINTENANCE AT THE PLANT", "Due to 
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">start_date =</span> <span class="fu">mdy</span>(issued), </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">end_date =</span> <span class="fu">mdy</span>(rescinded)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There were 2 warnings in `mutate()`.
-The first warning was:
-ℹ In argument: `start_date = mdy(issued)`.
-Caused by warning:
-! All formats failed to parse. No formats found.
-ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>water_boil_dates_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>water_boil_dates_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -410,12 +403,12 @@ Caused by warning:
 <h2 class="anchored" data-anchor-id="counting-length-of-water-boil-notices">Counting length of water boil notices</h2>
 <p>For my analysis I would like to look at the length of water boil notices and the counties where they are happening. In order to do this later I want to create a new column for the length of the water boil notices.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>water_boil_length <span class="ot">&lt;-</span> water_boil_dates_new <span class="sc">|&gt;</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">notice_length=</span> rescinded <span class="sc">-</span> issued, <span class="at">.after =</span> rescinded</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>water_boil_length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>water_boil_length <span class="ot">&lt;-</span> water_boil_dates_new <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">notice_length=</span> rescinded <span class="sc">-</span> issued, <span class="at">.after =</span> rescinded</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>water_boil_length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -429,10 +422,10 @@ Caused by warning:
 <h2 class="anchored" data-anchor-id="remove-unnecessary-column">Remove unnecessary column</h2>
 <p>I checked the original dataset to see if there were any rows of data in the “do_not_consume_use” column and they were all N/A. We will remove this unnecessary column with the filter option. I also want to remove the “end_date” and “start_date” column that are still in character format because I already created the new date column.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>water_boil_filter <span class="ot">&lt;-</span> water_boil_length <span class="sc">|&gt;</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(end_date, start_date, do_not_consume_use)) </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>water_boil_filter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>water_boil_filter <span class="ot">&lt;-</span> water_boil_length <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(end_date, start_date, do_not_consume_use)) </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>water_boil_filter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -446,8 +439,8 @@ Caused by warning:
 <h2 class="anchored" data-anchor-id="exporting-clean-data">Exporting clean data</h2>
 <p>Now that my data looks clean I will export to a new Quarto website page to start my analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a> water_boil_clean <span class="ot">&lt;-</span> water_boil_filter<span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">write_rds</span>(<span class="st">"data-processed/01-water_boil.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a> water_boil_clean <span class="ot">&lt;-</span> water_boil_filter<span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">write_rds</span>(<span class="st">"data-processed/01-water_boil.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
