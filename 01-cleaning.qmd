@@ -10,7 +10,7 @@ The steps we'll take to prepare our data:
 - Import it into our notebook
 - Clean up data types and columns
 - Export the data for next notebook
-- Make sure that the updated data that covers the year 2023, aligns with the rest of the data. 
+- Make sure that the updated data that covers the year 2023 aligns with the rest of the data. 
 
 ## Setup 
 
@@ -64,6 +64,8 @@ We want to make sure that our dates are in month, date and year format for consi
 Our end date was having issues parsing, so we made sure to filter out the dates that did not exist or were "NA." After we filtered them out we can see that these dates represent on going (or active) water boil notices, and that's why they were formatted differently from "start_date."
 
 ```{r}
+#| warning: false
+
 water_boil_dates <- water_boil |>
   mutate(
     end_date_notice = excel_numeric_to_date(end_date |> parse_number()), .after = end_date

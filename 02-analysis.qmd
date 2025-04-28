@@ -77,12 +77,6 @@ water_boil_county <- water_boil |>
 water_boil_county
 ```
 
-Download into CSV file: 
-
-```{r}
-write_csv(water_boil_county, "/Users/MariaProbert/rwd/water_boil_county.csv")
-```
-
 Then I reformatted my data so that I can apply it to a visualization: 
 
 ```{r}
@@ -310,7 +304,7 @@ water_boil |>
 
 - In the state of Texas, there were at least 69 total ongoing water boil notices (in all counties and regions) at the time that this data was collected. 
 
-## Harris County water notices  
+## Harris County notices  
 
 Let's look at the water boil notices in Harris: 
 
@@ -370,7 +364,7 @@ mapview(population_shape, zcol= "county_population_notice", col.regions= c("#feb
 - The counties with the most population affected by water boil notices matches up to counties with a high population density. For example, Harris and the Houston area as well as Smith county and Tyler. 
 
 
-Let's try this by region and look at populations under water boil notices by region: 
+Let's try this by region and look at populations under water boil notices: 
 
 ```{r}
 water_boil |>
@@ -391,10 +385,32 @@ water_boil |>
   filter(if_any(c(rescinded, notice_length), is.na)) |> 
   summarise(texas_population_notice = sum(population)) 
 ```
-
 **Data Takeaways**: 
 
 - When this data was collected, at least 56,074 Texas were affected by water boil notices. 
+
+Now let's look at the population affected each year. I grouped by year both issued and rescinded. NA represents ongoing notices. 
+
+```{r}
+#| warning: false
+
+water_boil |>
+  group_by(year(issued), year(rescinded)) |>
+  summarise(sum(population)) 
+```
+
+**Data Takeaways**: 
+
+- There is no clear pattern to the volume of water boil notices. 
+
+```{r}
+water_boil |>
+  summarise(total_affected = sum(population))
+```
+
+**Data Takeaway**: 
+
+- At least 57,049,113 people were affected by water boil notices between 2013 and 2024. 
 
 ## What are the most common reasons for water boil notices? Are these statewide or localized problems? 
 
@@ -421,15 +437,6 @@ Note: BWN stands for boil water notice.
 **Data Takeaways**: 
 
 - Water boil notices are more related to system wide issues, rather than localized. But, not by that much of a difference.  
-
-```{r}
-water_boil |>
-  summarise(total_affected = sum(population))
-```
-
-**Data Takeaway**: 
-
-- At least 57,049,113 people were affected by water boil notices between 2013 and 2024. 
 
 ## Main Takeaways 
 
